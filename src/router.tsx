@@ -1,19 +1,11 @@
-import { Routes, Route } from 'react-router-dom';
-
-// Temporary home component - replace with your actual pages
-const HomePage = () => {
-  return (
-    <div>
-      <h1>Welcome to Transport App</h1>
-      <p>Add your pages in src/pages/ and import them here</p>
-    </div>
-  );
-};
+import { Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/landing-page/index";
 
 export const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/landing-page" element={<LandingPage />} />
       {/* Add more routes here */}
       {/* Example:
         <Route path="/users" element={<UserPage />} />

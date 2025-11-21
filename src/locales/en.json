@@ -1,0 +1,86 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "logout": "Logout",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Smart Inter-Provincial Booking",
+    "subtitle": "Automatic carpooling saves costs. Find and book trips quickly with Digi Transport",
+    "getStarted": "Book Now",
+    "learnMore": "Learn More"
+  },
+  "pricing": {
+    "title": "Flexible Pricing",
+    "subtitle": "Choose the plan that's right for you. Passengers are free, drivers only pay when they have successful orders.",
+    "passenger": {
+      "name": "Passenger",
+      "price": "Free",
+      "description": "For customers booking inter-provincial tickets",
+      "cta": "Sign Up Now",
+      "features": [
+        "Unlimited carpool booking",
+        "Full trip booking",
+        "Online payment (VNPay, Momo, ZaloPay)",
+        "Real-time trip tracking (GPS)",
+        "View booking history",
+        "Rate drivers and transport companies",
+        "24/7 customer support"
+      ]
+    },
+    "driver": {
+      "name": "Driver / Transport Company",
+      "price": "5%",
+      "period": "/order",
+      "description": "For drivers and small transport companies",
+      "cta": "Become a Partner",
+      "features": [
+        "Register routes and manage trips",
+        "Automatic booking notifications",
+        "Detailed revenue tracking",
+        "Manage schedules and seats",
+        "Update trip status",
+        "Email technical support",
+        "Monthly revenue reports"
+      ]
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Contact",
+      "description": "For large transport companies and professional transport operators",
+      "cta": "Contact Sales",
+      "features": [
+        "Manage multiple routes and fleets",
+        "Discounted commission (from 3%)",
+        "System API integration",
+        "Advanced revenue reports",
+        "24/7 priority support",
+        "Automatic payment integration",
+        "Employee and permission management",
+        "Professional consulting and support"
+      ]
+    },
+    "note": "Note: Customers don't need to pay registration fees, only pay ticket prices when booking trips. Drivers/transport companies only pay commission fees when they have successful orders.",
+    "contactUs": "Contact us",
+    "contactUsDesc": "to get advice on a suitable enterprise package."
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "subtitle": "Hear from passengers who have used Digi Transport's booking and carpooling services."
+  },
+  "footer": {
+    "companyName": "DigiCO Transport",
+    "tagline": "Your trusted partner for efficient transportation solutions.",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "backToTop": "Back to top",
+    "copyright": "© {{year}} DigiCO Transport. All rights reserved."
+  }
+}
+

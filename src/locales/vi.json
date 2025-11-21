@@ -1,0 +1,86 @@
+{
+  "common": {
+    "home": "Trang chủ",
+    "about": "Về chúng tôi",
+    "services": "Dịch vụ",
+    "pricing": "Bảng giá",
+    "contact": "Liên hệ",
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "logout": "Đăng xuất",
+    "language": "Ngôn ngữ"
+  },
+  "hero": {
+    "title": "Đặt Xe Liên Tỉnh Thông Minh",
+    "subtitle": "Ghép chuyến tự động, tiết kiệm chi phí. Tìm và đặt chuyến xe nhanh chóng với Digi Transport",
+    "getStarted": "Đặt xe ngay",
+    "learnMore": "Tìm hiểu thêm"
+  },
+  "pricing": {
+    "title": "Bảng Giá Linh Hoạt",
+    "subtitle": "Chọn gói phù hợp với nhu cầu của bạn. Khách hàng miễn phí, tài xế chỉ trả phí khi có đơn hàng thành công.",
+    "passenger": {
+      "name": "Hành Khách",
+      "price": "Miễn phí",
+      "description": "Dành cho khách hàng đặt vé đi liên tỉnh",
+      "cta": "Đăng ký ngay",
+      "features": [
+        "Đặt vé ghép chuyến không giới hạn",
+        "Đặt vé nguyên chuyến",
+        "Thanh toán online (VNPay, Momo, ZaloPay)",
+        "Theo dõi chuyến đi theo thời gian thực (GPS)",
+        "Xem lịch sử đặt vé",
+        "Đánh giá tài xế và nhà xe",
+        "Hỗ trợ khách hàng 24/7"
+      ]
+    },
+    "driver": {
+      "name": "Tài Xế / Nhà Xe",
+      "price": "5%",
+      "period": "/đơn hàng",
+      "description": "Dành cho tài xế và nhà xe nhỏ",
+      "cta": "Đăng ký làm đối tác",
+      "features": [
+        "Đăng ký tuyến và quản lý chuyến",
+        "Nhận đơn đặt xe tự động",
+        "Theo dõi doanh thu chi tiết",
+        "Quản lý lịch chạy và số ghế",
+        "Cập nhật trạng thái chuyến",
+        "Hỗ trợ kỹ thuật qua email",
+        "Báo cáo doanh thu hàng tháng"
+      ]
+    },
+    "enterprise": {
+      "name": "Doanh Nghiệp",
+      "price": "Liên hệ",
+      "description": "Dành cho công ty vận tải lớn và nhà xe chuyên nghiệp",
+      "cta": "Liên hệ tư vấn",
+      "features": [
+        "Quản lý nhiều tuyến và đội xe",
+        "Phí hoa hồng ưu đãi (từ 3%)",
+        "API tích hợp hệ thống",
+        "Báo cáo doanh thu nâng cao",
+        "Hỗ trợ ưu tiên 24/7",
+        "Tích hợp thanh toán tự động",
+        "Quản lý nhân viên và phân quyền",
+        "Tư vấn và hỗ trợ chuyên nghiệp"
+      ]
+    },
+    "note": "Lưu ý: Khách hàng không cần trả phí đăng ký, chỉ thanh toán giá vé khi đặt chuyến. Tài xế/nhà xe chỉ trả phí hoa hồng khi có đơn hàng thành công.",
+    "contactUs": "Liên hệ chúng tôi",
+    "contactUsDesc": "để được tư vấn gói doanh nghiệp phù hợp."
+  },
+  "testimonials": {
+    "title": "Khách Hàng Nói Gì Về Chúng Tôi",
+    "subtitle": "Hãy lắng nghe những chia sẻ từ hành khách đã sử dụng dịch vụ đặt xe và ghép xe của Digi Transport."
+  },
+  "footer": {
+    "companyName": "DigiCO Transport",
+    "tagline": "Đối tác tin cậy của bạn cho giải pháp vận tải hiệu quả.",
+    "quickLinks": "Liên kết nhanh",
+    "support": "Hỗ trợ",
+    "backToTop": "Về đầu trang",
+    "copyright": "© {{year}} DigiCO Transport. Tất cả quyền được bảo lưu."
+  }
+}
+
