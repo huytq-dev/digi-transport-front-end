@@ -1,0 +1,319 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "logout": "Logout",
+    "language": "Language"
+  },
+  "header": {
+    "about": "About Us",
+    "bookingGuide": "Booking Guide",
+    "forPartners": "For Partners/Drivers",
+    "promotions": "Promotions",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Vietnam's #1 Carpooling Platform",
+    "title": "Smart Inter-Provincial Travel – Intelligent Carpooling, Cost Savings",
+    "subtitle": "Connect passengers with trusted transport companies. Choose affordable carpooling or private vehicle rental with just one tap.",
+    "downloadApp": "Download App Now",
+    "learnMore": "Learn More",
+    "bookingWidget": {
+      "carpoolTab": "Carpool",
+      "carpoolTabDesc": "Save 40%",
+      "privateTab": "Private Vehicle",
+      "privateTabDesc": "Private",
+      "from": "From",
+      "fromPlaceholder": "Enter pickup point...",
+      "to": "To",
+      "toPlaceholder": "Enter destination...",
+      "date": "Departure Date",
+      "datePlaceholder": "Select date",
+      "seats": "Seats",
+      "findTrip": "Find Carpool Trip",
+      "findPrivateTrip": "Find Private Vehicle",
+      "trustBadge": "Over 1,000+ trips daily"
+    }
+  },
+  "usp": {
+    "title": "Why Choose Digi Transport?",
+    "badge": "Why Choose Digi Transport?",
+    "subtitle": "We don't just provide trips, we deliver a seamless connection experience between passengers and transport partners.",
+    "stats": {
+      "dailyTrips": "Daily Trips",
+      "satisfiedCustomers": "Satisfied Customers",
+      "partners": "Transport Partners",
+      "provinces": "Provinces Covered"
+    },
+    "items": {
+      "smartMatching": {
+        "title": "Smart Carpooling (AI Matching)",
+        "description": "Automatically find people traveling the same route, helping share costs and save up to 40% on tickets."
+      },
+      "flexible": {
+        "title": "Diverse Options",
+        "description": "Flexible between single tickets (carpooling) or full vehicle rental (4-seat, 7-seat, 16-seat...)."
+      },
+      "transparent": {
+        "title": "Transparent & Safe",
+        "description": "Know the fare upfront, no hidden fees. Track vehicle routes in real-time (GPS)."
+      },
+      "payment": {
+        "title": "Convenient Payment",
+        "description": "Support cashless payment via VNPay, Momo, ZaloPay and electronic invoice issuance."
+      }
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Book a ride in just 4 simple steps",
+    "steps": {
+      "step1": {
+        "title": "Find Trip",
+        "description": "Enter departure point, destination and time"
+      },
+      "step2": {
+        "title": "Choose Vehicle",
+        "description": "View list of available vehicles or transport companies with suitable routes"
+      },
+      "step3": {
+        "title": "Book & Pay",
+        "description": "Confirm seat selection and pay securely"
+      },
+      "step4": {
+        "title": "Enjoy Your Journey",
+        "description": "Driver picks you up, track vehicle via App and rate after trip"
+      }
+    }
+  },
+  "popularRoutes": {
+    "title": "Popular Routes",
+    "subtitle": "Discover the most loved routes",
+    "viewAll": "View All Routes",
+    "badge": "Top Destinations",
+    "duration": "travel",
+    "bookNow": "Book now",
+    "routes": {
+      "hn-hp": {
+        "name": "Hanoi ⇄ Hai Phong",
+        "price": "From 150k/seat"
+      },
+      "hcm-vt": {
+        "name": "Ho Chi Minh City ⇄ Vung Tau",
+        "price": "From 120k/seat"
+      },
+      "dn-hue": {
+        "name": "Da Nang ⇄ Hue",
+        "price": "From 100k/seat"
+      }
+    }
+  },
+  "driverRecruitment": {
+    "title": "Partner with Digi Transport – Increase Income from Empty Seats",
+    "subtitle": "Join us to optimize revenue and manage trips efficiently",
+    "benefits": {
+      "revenue": {
+        "title": "Optimize Revenue",
+        "description": "Fill empty seats on outbound or return trips (convenient routes)"
+      },
+      "management": {
+        "title": "Easy Management",
+        "description": "Dedicated app for drivers to manage schedules and revenue"
+      },
+      "flexible": {
+        "title": "No Sales Targets",
+        "description": "Drive whenever you want"
+      }
+    },
+    "cta": "Register as Driver",
+    "downloadApp": "Download Driver App",
+    "footnote": "Actual income may vary depending on area and operating hours."
+  },
+  "mobileApp": {
+    "title": "Better Experience on Digi Transport App",
+    "subtitle": "Book rides anytime, anywhere, track driver location accurately",
+    "download": "Download App",
+    "googlePlay": "Download on Google Play",
+    "appStore": "Download on App Store",
+    "scanQR": "Scan QR code to download quickly",
+    "platforms": "Supports iOS & Android",
+    "mockupTitle": "Digi Transport",
+    "mockupSubtitle": "Track your trip"
+  },
+  "promotions": {
+    "subtitle": "Special promotions for you",
+    "promoCode": "Promotion Code",
+    "discount": "Discount",
+    "copyCode": "Copy Code",
+    "copied": "Copied code",
+    "items": {
+      "firstTrip": {
+        "title": "Get 20k off for your first trip",
+        "description": "Applies to new registered customers",
+        "discount": "20k",
+        "code": "FIRST20"
+      },
+      "weekend": {
+        "title": "Get 15% off for weekend trips",
+        "description": "Applies to trips on Saturday and Sunday",
+        "discount": "15%",
+        "code": "WEEKEND15"
+      },
+      "private": {
+        "title": "Get 50k when booking a private vehicle",
+        "description": "Applies to private vehicle bookings of 4 seats or more",
+        "discount": "50k",
+        "code": "PRIVATE50"
+      }
+    }
+  },
+  "pricing": {
+    "title": "Flexible Pricing",
+    "subtitle": "Choose the plan that's right for you. Passengers are free, drivers only pay when they have successful orders.",
+    "passenger": {
+      "name": "Passenger",
+      "price": "Free",
+      "description": "For customers booking inter-provincial tickets",
+      "cta": "Sign Up Now",
+      "features": [
+        "Unlimited carpool booking",
+        "Full trip booking",
+        "Online payment (VNPay, Momo, ZaloPay)",
+        "Real-time trip tracking (GPS)",
+        "View booking history",
+        "Rate drivers and transport companies",
+        "24/7 customer support"
+      ]
+    },
+    "driver": {
+      "name": "Driver / Transport Company",
+      "price": "5%",
+      "period": "/order",
+      "description": "For drivers and small transport companies",
+      "cta": "Become a Partner",
+      "features": [
+        "Register routes and manage trips",
+        "Automatic booking notifications",
+        "Detailed revenue tracking",
+        "Manage schedules and seats",
+        "Update trip status",
+        "Email technical support",
+        "Monthly revenue reports"
+      ]
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Contact",
+      "description": "For large transport companies and professional transport operators",
+      "cta": "Contact Sales",
+      "features": [
+        "Manage multiple routes and fleets",
+        "Discounted commission (from 3%)",
+        "System API integration",
+        "Advanced revenue reports",
+        "24/7 priority support",
+        "Automatic payment integration",
+        "Employee and permission management",
+        "Professional consulting and support"
+      ]
+    },
+    "popular": "Most Popular",
+    "note": "Note: Customers don't need to pay registration fees, only pay ticket prices when booking trips. Drivers/transport companies only pay commission fees when they have successful orders.",
+    "contactUs": "Contact us",
+    "contactUsDesc": "to get advice on a suitable enterprise package."
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "subtitle": "Hear from passengers who have used Digi Transport's booking and carpooling services.",
+    "badge": "Customer Reviews"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We're always here to help. Contact us through the channels below or fill out the form.",
+    "info": {
+      "title": "Contact Information",
+      "description": "Our support team is always ready to answer your questions.",
+      "phone": {
+        "title": "Hotline",
+        "content": "1900 1234",
+        "subContent": "Mon - Sun (24/7)"
+      },
+      "email": {
+        "title": "Email",
+        "content": "support@digitransport.com",
+        "subContent": "Response within 24h"
+      },
+      "address": {
+        "title": "Address",
+        "content": "12th Floor, Digi Tower",
+        "subContent": "Hanoi, Vietnam"
+      },
+      "hours": {
+        "title": "Business Hours",
+        "content": "08:00 - 18:00",
+        "subContent": "Business hours"
+      }
+    },
+    "form": {
+      "title": "Send Message",
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "subject": "Subject",
+      "selectSubject": "Select subject",
+      "options": {
+        "booking": "Booking / Carpooling",
+        "partnership": "Partnership",
+        "support": "Technical Support",
+        "other": "Other"
+      },
+      "message": "Message",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "successMessage": "Thank you for contacting us! We will respond as soon as possible.",
+      "placeholders": {
+        "name": "John Doe",
+        "phone": "0912 345 678",
+        "email": "example@email.com",
+        "message": "Your message content..."
+      }
+    }
+  },
+  "footer": {
+    "companyName": "Digi Transport",
+    "tagline": "Your trusted partner for efficient transportation solutions.",
+    "companyInfo": {
+      "name": "Digi Transport",
+      "taxCode": "Tax Code: 0123456789",
+      "address": "Address: 123 ABC Street, XYZ District, Da Nang City",
+      "hotline": "Support Hotline: 1900 1234"
+    },
+    "quickLinks": "Quick Links",
+    "legal": "Legal",
+    "support": "Support",
+    "newsletter": {
+      "title": "Subscribe to Newsletter",
+      "subtitle": "Enter email to receive discount codes",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "backToTop": "Back to top",
+    "copyright": "© {{year}} Digi Transport. All rights reserved.",
+    "links": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "regulations": "Operating Regulations",
+      "complaints": "Complaint Resolution"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "zalo": "Zalo OA",
+      "tiktok": "TikTok"
+    }
+  }
+}
