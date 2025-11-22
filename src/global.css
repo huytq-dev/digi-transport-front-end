@@ -76,6 +76,14 @@
     --color-secondary: var(--color-light-blue);
     --color-background: var(--color-cream);
     --color-text-dark: var(--color-black);
+
+    /* 
+    #fbfdff
+    #e3dcda
+    #000202
+    #5d2060
+    #f70015
+    #78ea61 */
   }
 
   .dark {

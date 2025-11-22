@@ -10,11 +10,147 @@
     "logout": "Đăng xuất",
     "language": "Ngôn ngữ"
   },
+  "header": {
+    "about": "Về chúng tôi",
+    "bookingGuide": "Hướng dẫn đặt xe",
+    "forPartners": "Dành cho Đối tác/Tài xế",
+    "promotions": "Khuyến mãi",
+    "contact": "Liên hệ"
+  },
   "hero": {
-    "title": "Đặt Xe Liên Tỉnh Thông Minh",
-    "subtitle": "Ghép chuyến tự động, tiết kiệm chi phí. Tìm và đặt chuyến xe nhanh chóng với Digi Transport",
-    "getStarted": "Đặt xe ngay",
-    "learnMore": "Tìm hiểu thêm"
+    "title": "Vi vu liên tỉnh – Ghép chuyến thông minh, Tiết kiệm chi phí",
+    "subtitle": "Kết nối hành khách và nhà xe uy tín. Lựa chọn đi ghép giá rẻ hoặc bao xe riêng tư chỉ với 1 chạm.",
+    "bookingWidget": {
+      "carpoolTab": "Đi ghép",
+      "carpoolTabDesc": "Tiết kiệm",
+      "privateTab": "Bao nguyên xe",
+      "privateTabDesc": "Thoải mái",
+      "from": "Điểm đi",
+      "to": "Điểm đến",
+      "date": "Ngày giờ đi",
+      "seats": "Số lượng ghế",
+      "findTrip": "Tìm chuyến ngay",
+      "viewPrice": "Xem giá vé"
+    }
+  },
+  "usp": {
+    "title": "Tại sao chọn Digi Transport?",
+    "items": {
+      "smartMatching": {
+        "title": "Ghép chuyến thông minh (AI Matching)",
+        "description": "Tự động tìm người đi cùng lộ trình giúp chia sẻ chi phí vé xe rẻ hơn đến 40%."
+      },
+      "flexible": {
+        "title": "Đa dạng lựa chọn",
+        "description": "Linh hoạt giữa vé lẻ (ghép xe) hoặc thuê trọn gói (4 chỗ, 7 chỗ, 16 chỗ...)."
+      },
+      "transparent": {
+        "title": "Minh bạch & An toàn",
+        "description": "Biết trước giá cước, không phụ phí. Theo dõi lộ trình xe chạy theo thời gian thực (GPS)."
+      },
+      "payment": {
+        "title": "Thanh toán tiện lợi",
+        "description": "Hỗ trợ thanh toán không tiền mặt qua VNPay, Momo, ZaloPay và xuất hóa đơn điện tử."
+      }
+    }
+  },
+  "howItWorks": {
+    "title": "Quy trình hoạt động",
+    "subtitle": "Đặt xe chỉ với 4 bước đơn giản",
+    "steps": {
+      "step1": {
+        "title": "Tìm chuyến",
+        "description": "Nhập điểm đi, điểm đến và thời gian"
+      },
+      "step2": {
+        "title": "Chọn xe",
+        "description": "Xem danh sách các xe đang tiện chuyến hoặc nhà xe có tuyến phù hợp"
+      },
+      "step3": {
+        "title": "Đặt & Thanh toán",
+        "description": "Xác nhận ghế ngồi và thanh toán an toàn"
+      },
+      "step4": {
+        "title": "Tận hưởng hành trình",
+        "description": "Tài xế đón tận nơi, theo dõi xe qua App và đánh giá sau chuyến đi"
+      }
+    }
+  },
+  "popularRoutes": {
+    "title": "Tuyến đường phổ biến",
+    "subtitle": "Khám phá các tuyến đường được yêu thích nhất",
+    "viewAll": "Xem tất cả tuyến đường",
+    "routes": {
+      "hn-hp": {
+        "name": "Hà Nội ⇄ Hải Phòng",
+        "price": "Từ 150k/ghế"
+      },
+      "hcm-vt": {
+        "name": "TP.HCM ⇄ Vũng Tàu",
+        "price": "Từ 120k/ghế"
+      },
+      "dn-hue": {
+        "name": "Đà Nẵng ⇄ Huế",
+        "price": "Từ 100k/ghế"
+      }
+    }
+  },
+  "driverRecruitment": {
+    "title": "Hợp tác cùng Digi Transport – Gia tăng thu nhập từ ghế trống",
+    "subtitle": "Tham gia cùng chúng tôi để tối ưu hóa doanh thu và quản lý chuyến đi hiệu quả",
+    "benefits": {
+      "revenue": {
+        "title": "Tối ưu doanh thu",
+        "description": "Lấp đầy ghế trống chiều đi hoặc chiều về (xe tiện chuyến)"
+      },
+      "management": {
+        "title": "Quản lý dễ dàng",
+        "description": "App riêng dành cho tài xế quản lý lịch chạy, doanh thu"
+      },
+      "flexible": {
+        "title": "Không áp doanh số",
+        "description": "Chạy khi nào bạn muốn"
+      }
+    },
+    "cta": "Đăng ký trở thành Tài xế",
+    "downloadApp": "Tải App Tài xế"
+  },
+  "mobileApp": {
+    "title": "Trải nghiệm tốt hơn trên ứng dụng Digi Transport",
+    "subtitle": "Đặt xe mọi lúc mọi nơi, theo dõi vị trí tài xế chuẩn xác",
+    "download": "Tải ứng dụng",
+    "googlePlay": "Tải trên Google Play",
+    "appStore": "Tải trên App Store",
+    "scanQR": "Quét mã QR để tải nhanh",
+    "mockupTitle": "Digi Transport",
+    "mockupSubtitle": "Theo dõi chuyến đi của bạn"
+  },
+  "promotions": {
+    "subtitle": "Khuyến mãi đặc biệt dành cho bạn",
+    "promoCode": "Mã khuyến mãi",
+    "discount": "Giảm giá",
+    "copyCode": "Sao chép mã",
+    "copied": "Đã copy mã",
+    "items": {
+      "firstTrip": {
+        "title": "Giảm 20k cho chuyến đi đầu tiên",
+        "description": "Áp dụng cho khách hàng mới đăng ký",
+        "discount": "20k",
+        "code": "FIRST20"
+      },
+      "weekend": {
+        "title": "Giảm 15% cho chuyến đi cuối tuần",
+        "description": "Áp dụng cho các chuyến đi thứ 7 và Chủ nhật",
+        "discount": "15%",
+        "code": "WEEKEND15"
+      },
+      "private": {
+        "title": "Tặng 50k khi đặt xe nguyên chuyến",
+        "description": "Áp dụng cho đặt bao nguyên xe từ 4 chỗ trở lên",
+        "discount": "50k",
+        "code": "PRIVATE50"
+      }
+    }
   },
   "pricing": {
     "title": "Bảng Giá Linh Hoạt",
@@ -74,13 +210,78 @@
     "title": "Khách Hàng Nói Gì Về Chúng Tôi",
     "subtitle": "Hãy lắng nghe những chia sẻ từ hành khách đã sử dụng dịch vụ đặt xe và ghép xe của Digi Transport."
   },
+  "contact": {
+    "title": "Liên Hệ Với Chúng Tôi",
+    "subtitle": "Chúng tôi luôn sẵn sàng hỗ trợ bạn. Hãy liên hệ với chúng tôi qua các kênh sau hoặc điền form bên dưới.",
+    "info": {
+      "title": "Thông Tin Liên Hệ",
+      "description": "Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giải đáp mọi thắc mắc của bạn.",
+      "phone": {
+        "title": "Hotline",
+        "content": "1900 1234"
+      },
+      "email": {
+        "title": "Email",
+        "content": "support@digitransport.com"
+      },
+      "address": {
+        "title": "Địa Chỉ",
+        "content": "123 Đường ABC, Quận XYZ, Đà Nẵng"
+      },
+      "hours": {
+        "title": "Giờ Làm Việc",
+        "content": "Thứ 2 - Thứ 7: 7:00 - 22:00"
+      }
+    },
+    "form": {
+      "title": "Gửi Tin Nhắn",
+      "name": "Họ và Tên",
+      "email": "Email",
+      "phone": "Số Điện Thoại",
+      "subject": "Chủ Đề",
+      "selectSubject": "Chọn chủ đề",
+      "options": {
+        "booking": "Đặt vé / Ghép xe",
+        "partnership": "Hợp tác / Đối tác",
+        "support": "Hỗ trợ kỹ thuật",
+        "other": "Khác"
+      },
+      "message": "Nội Dung",
+      "submit": "Gửi Tin Nhắn",
+      "sending": "Đang gửi...",
+      "successMessage": "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể."
+    }
+  },
   "footer": {
-    "companyName": "DigiCO Transport",
+    "companyName": "Digi Transport",
     "tagline": "Đối tác tin cậy của bạn cho giải pháp vận tải hiệu quả.",
+    "companyInfo": {
+      "name": "Digi Transport",
+      "taxCode": "Mã số thuế: 0123456789",
+      "address": "Địa chỉ: 123 Đường ABC, Quận XYZ, Đà Nẵng",
+      "hotline": "Hotline hỗ trợ: 1900 1234"
+    },
     "quickLinks": "Liên kết nhanh",
+    "legal": "Pháp lý",
     "support": "Hỗ trợ",
+    "newsletter": {
+      "title": "Đăng ký nhận tin",
+      "subtitle": "Nhập email để nhận mã giảm giá",
+      "placeholder": "Nhập email của bạn",
+      "subscribe": "Đăng ký"
+    },
     "backToTop": "Về đầu trang",
-    "copyright": "© {{year}} DigiCO Transport. Tất cả quyền được bảo lưu."
+    "copyright": "© {{year}} Digi Transport. Tất cả quyền được bảo lưu.",
+    "links": {
+      "privacy": "Chính sách bảo mật",
+      "terms": "Điều khoản sử dụng",
+      "regulations": "Quy chế hoạt động",
+      "complaints": "Giải quyết khiếu nại"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "zalo": "Zalo OA",
+      "tiktok": "TikTok"
+    }
   }
 }
-

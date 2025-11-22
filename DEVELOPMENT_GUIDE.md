@@ -10,9 +10,10 @@
 6. [Quản Lý State với Redux](#quản-lý-state-với-redux)
 7. [Tạo Component](#tạo-component)
 8. [Styling và CSS Variables](#styling-và-css-variables)
-9. [Routing](#routing)
-10. [TypeScript Types](#typescript-types)
-11. [Utilities](#utilities)
+9. [Glassmorphism Effect](#glassmorphism-effect)
+10. [Routing](#routing)
+11. [TypeScript Types](#typescript-types)
+12. [Utilities](#utilities)
 
 ---
 
@@ -806,6 +807,166 @@ Tất cả landing page components đã được refactor để sử dụng UI c
 - **Light Blue**: `#8FABD4` - Secondary color, links
 - **Dark Blue**: `#4A70A9` - Primary color, buttons
 - **Black**: `#000000` - Text, footer background
+
+---
+
+## 🔮 Glassmorphism Effect
+
+### Tổng Quan
+
+Glassmorphism là một hiệu ứng UI hiện đại tạo ra cảm giác "kính mờ" (frosted glass), với background trong suốt, blur effect và border mỏng. Hiệu ứng này giúp tạo độ sâu và tính hiện đại cho giao diện.
+
+### Đặc Điểm Chính
+
+1. **Backdrop Blur**: Làm mờ nền phía sau element
+2. **Semi-transparent Background**: Background trong suốt với độ mờ
+3. **Thin Border**: Border mỏng, sáng để tạo viền
+4. **Subtle Shadow**: Shadow nhẹ để tạo độ sâu
+5. **Gradient Overlay**: (Tùy chọn) Gradient overlay khi hover
+
+### Cấu Trúc Class Chuẩn
+
+```typescript
+className="relative overflow-hidden rounded-full border border-white/20 bg-[var(--color-dark-blue)]/20 backdrop-blur-md text-[var(--color-dark-blue)] font-semibold shadow-lg shadow-[var(--color-dark-blue)]/20 hover:bg-[var(--color-dark-blue)]/30 hover:shadow-xl hover:shadow-[var(--color-dark-blue)]/30 transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100"
+```
+
+### Giải Thích Từng Phần
+
+#### 1. Container Setup
+```typescript
+"relative overflow-hidden"
+```
+- `relative`: Để định vị các pseudo-elements (::before, ::after)
+- `overflow-hidden`: Ẩn phần nội dung tràn ra ngoài border radius
+
+#### 2. Border & Background
+```typescript
+"border border-white/20 bg-[var(--color-dark-blue)]/20"
+```
+- `border border-white/20`: Border mỏng màu trắng với độ mờ 20%
+- `bg-[var(--color-dark-blue)]/20`: Background trong suốt với độ mờ 20%
+
+#### 3. Backdrop Blur
+```typescript
+"backdrop-blur-md"
+```
+- `backdrop-blur-md`: Làm mờ nền phía sau element (hiệu ứng glass chính)
+
+#### 4. Shadow
+```typescript
+"shadow-lg shadow-[var(--color-dark-blue)]/20"
+```
+- `shadow-lg`: Shadow lớn
+- `shadow-[var(--color-dark-blue)]/20`: Màu shadow với độ mờ 20%
+
+#### 5. Hover Effects
+```typescript
+"hover:bg-[var(--color-dark-blue)]/30 hover:shadow-xl hover:shadow-[var(--color-dark-blue)]/30"
+```
+- Tăng độ mờ background khi hover (20% → 30%)
+- Tăng shadow khi hover (lg → xl)
+
+#### 6. Gradient Overlay (Optional)
+```typescript
+"before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100"
+```
+- Tạo gradient overlay từ trắng sang trong suốt
+- Chỉ hiện khi hover (`opacity-0` → `opacity-100`)
+
+### Ví Dụ Sử Dụng
+
+#### Button với Glassmorphism
+
+```typescript
+import { Button } from '@/components/ui/button';
+
+<Button
+  onClick={() => navigate("/register")}
+  className="relative overflow-hidden rounded-full border border-white/20 bg-[var(--color-dark-blue)]/20 backdrop-blur-md text-[var(--color-dark-blue)] font-semibold shadow-lg shadow-[var(--color-dark-blue)]/20 hover:bg-[var(--color-dark-blue)]/30 hover:shadow-xl hover:shadow-[var(--color-dark-blue)]/30 transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100"
+>
+  <span className="relative z-10">Sign Up</span>
+</Button>
+```
+
+**Lưu ý**: Sử dụng `<span className="relative z-10">` để đảm bảo text hiển thị trên gradient overlay.
+
+#### Card với Glassmorphism
+
+```typescript
+<div className="relative overflow-hidden rounded-lg border border-white/20 bg-white/10 backdrop-blur-md shadow-lg p-6">
+  <h3 className="text-xl font-bold mb-2">Glass Card</h3>
+  <p className="text-gray-700">Content goes here</p>
+</div>
+```
+
+#### Header với Glassmorphism
+
+```typescript
+<motion.header
+  className="sticky top-0 z-50 border-b border-[var(--color-light-blue)]/20 backdrop-blur-md bg-[var(--color-cream)]/80"
+  animate={{
+    backgroundColor: isScrolled 
+      ? "rgba(239, 236, 227, 0.85)" 
+      : "var(--color-cream)",
+  }}
+>
+  {/* Header content */}
+</motion.header>
+```
+
+### Biến Thể Glassmorphism
+
+#### 1. Light Glass (Nhẹ nhàng)
+```typescript
+"bg-white/10 backdrop-blur-sm border-white/10"
+```
+
+#### 2. Medium Glass (Vừa phải)
+```typescript
+"bg-[var(--color-dark-blue)]/20 backdrop-blur-md border-white/20"
+```
+
+#### 3. Heavy Glass (Đậm)
+```typescript
+"bg-[var(--color-dark-blue)]/40 backdrop-blur-lg border-white/30"
+```
+
+### Best Practices
+
+1. ✅ **Sử dụng với backdrop có màu sắc**: Glassmorphism hoạt động tốt nhất khi có background phía sau
+2. ✅ **Không lạm dụng**: Chỉ sử dụng cho các elements quan trọng (buttons, cards, headers)
+3. ✅ **Đảm bảo contrast**: Text phải đủ tương phản với background trong suốt
+4. ✅ **Sử dụng CSS Variables**: Luôn dùng `var(--color-*)` để đồng bộ theme
+5. ✅ **Thêm z-index cho content**: Sử dụng `relative z-10` cho text/content bên trong
+
+### Khi Nào Sử Dụng Glassmorphism?
+
+✅ **Nên sử dụng khi:**
+- Cần tạo độ sâu và hiện đại cho UI
+- Element cần nổi bật nhưng không che khuất background
+- Header hoặc navigation bar
+- Modal hoặc overlay
+- Call-to-action buttons
+
+❌ **Không nên sử dụng khi:**
+- Background phía sau quá phức tạp (sẽ làm mất hiệu ứng)
+- Cần độ tương phản cao cho accessibility
+- Element nhỏ hoặc không quan trọng
+- Mobile-first design với performance concerns
+
+### Ví Dụ Thực Tế trong Dự Án
+
+Trong `landing-header.tsx`, nút "Sign Up" đã được áp dụng glassmorphism:
+
+```typescript
+<Button
+  onClick={() => navigate("/register")}
+  className="relative overflow-hidden rounded-full border border-white/20 bg-[var(--color-dark-blue)]/20 backdrop-blur-md text-[var(--color-dark-blue)] font-semibold shadow-lg shadow-[var(--color-dark-blue)]/20 hover:bg-[var(--color-dark-blue)]/30 hover:shadow-xl hover:shadow-[var(--color-dark-blue)]/30 transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100"
+  aria-label={t("common.signUp")}
+>
+  <span className="relative z-10">{t("common.signUp")}</span>
+</Button>
+```
 
 ---
 
