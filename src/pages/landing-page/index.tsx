@@ -8,7 +8,6 @@ import LandingHowItWorks from '@/features/landing-page/components/landing-how-it
 import LandingPopularRoutes from '@/features/landing-page/components/landing-popular-routes';
 import LandingDriverRecruitment from '@/features/landing-page/components/landing-driver-recruitment';
 import LandingMobileApp from '@/features/landing-page/components/landing-mobile-app';
-import LandingPromotions from '@/features/landing-page/components/landing-promotions';
 import LandingPricing from '@/features/landing-page/components/landing-pricing';
 import LandingTestimonials from '@/features/landing-page/components/landing-testimonials';
 import LandingContact from '@/features/landing-page/components/landing-contact';
@@ -25,7 +24,6 @@ function LandingPage() {
         <LandingPopularRoutes />
         <LandingDriverRecruitment />
         <LandingMobileApp />
-        <LandingPromotions />
         <LandingPricing />
         <LandingTestimonials />
         <LandingContact />

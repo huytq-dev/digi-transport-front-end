@@ -1,0 +1,50 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { ReactNode } from "react";
+
+interface AnimatedTextProps {
+  children: ReactNode;
+  className?: string;
+  animationType?: "fade" | "slideUp" | "slideDown";
+}
+
+const animationVariants = {
+  fade: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  },
+  slideUp: {
+    initial: { opacity: 0, y: -10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 10 },
+  },
+  slideDown: {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -10 },
+  },
+};
+
+export const AnimatedText = ({
+  children,
+  className = "",
+  animationType = "fade",
+}: AnimatedTextProps) => {
+  const variant = animationVariants[animationType];
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.span
+        key={String(children)}
+        initial={variant.initial}
+        animate={variant.animate}
+        exit={variant.exit}
+        transition={{ duration: 0.2 }}
+        className={className}
+      >
+        {children}
+      </motion.span>
+    </AnimatePresence>
+  );
+};
+

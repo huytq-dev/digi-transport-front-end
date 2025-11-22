@@ -18,23 +18,38 @@
     "contact": "Contact"
   },
   "hero": {
+    "badge": "Vietnam's #1 Carpooling Platform",
     "title": "Smart Inter-Provincial Travel – Intelligent Carpooling, Cost Savings",
     "subtitle": "Connect passengers with trusted transport companies. Choose affordable carpooling or private vehicle rental with just one tap.",
+    "downloadApp": "Download App Now",
+    "learnMore": "Learn More",
     "bookingWidget": {
       "carpoolTab": "Carpool",
-      "carpoolTabDesc": "Save",
+      "carpoolTabDesc": "Save 40%",
       "privateTab": "Private Vehicle",
-      "privateTabDesc": "Comfort",
+      "privateTabDesc": "Private",
       "from": "From",
+      "fromPlaceholder": "Enter pickup point...",
       "to": "To",
-      "date": "Departure Date & Time",
-      "seats": "Number of Seats",
-      "findTrip": "Find Trip Now",
-      "viewPrice": "View Prices"
+      "toPlaceholder": "Enter destination...",
+      "date": "Departure Date",
+      "datePlaceholder": "Select date",
+      "seats": "Seats",
+      "findTrip": "Find Carpool Trip",
+      "findPrivateTrip": "Find Private Vehicle",
+      "trustBadge": "Over 1,000+ trips daily"
     }
   },
   "usp": {
     "title": "Why Choose Digi Transport?",
+    "badge": "Why Choose Digi Transport?",
+    "subtitle": "We don't just provide trips, we deliver a seamless connection experience between passengers and transport partners.",
+    "stats": {
+      "dailyTrips": "Daily Trips",
+      "satisfiedCustomers": "Satisfied Customers",
+      "partners": "Transport Partners",
+      "provinces": "Provinces Covered"
+    },
     "items": {
       "smartMatching": {
         "title": "Smart Carpooling (AI Matching)",
@@ -80,6 +95,9 @@
     "title": "Popular Routes",
     "subtitle": "Discover the most loved routes",
     "viewAll": "View All Routes",
+    "badge": "Top Destinations",
+    "duration": "travel",
+    "bookNow": "Book now",
     "routes": {
       "hn-hp": {
         "name": "Hanoi ⇄ Hai Phong",
@@ -113,7 +131,8 @@
       }
     },
     "cta": "Register as Driver",
-    "downloadApp": "Download Driver App"
+    "downloadApp": "Download Driver App",
+    "footnote": "Actual income may vary depending on area and operating hours."
   },
   "mobileApp": {
     "title": "Better Experience on Digi Transport App",
@@ -122,6 +141,7 @@
     "googlePlay": "Download on Google Play",
     "appStore": "Download on App Store",
     "scanQR": "Scan QR code to download quickly",
+    "platforms": "Supports iOS & Android",
     "mockupTitle": "Digi Transport",
     "mockupSubtitle": "Track your trip"
   },
@@ -202,13 +222,15 @@
         "Professional consulting and support"
       ]
     },
+    "popular": "Most Popular",
     "note": "Note: Customers don't need to pay registration fees, only pay ticket prices when booking trips. Drivers/transport companies only pay commission fees when they have successful orders.",
     "contactUs": "Contact us",
     "contactUsDesc": "to get advice on a suitable enterprise package."
   },
   "testimonials": {
     "title": "What Our Customers Say",
-    "subtitle": "Hear from passengers who have used Digi Transport's booking and carpooling services."
+    "subtitle": "Hear from passengers who have used Digi Transport's booking and carpooling services.",
+    "badge": "Customer Reviews"
   },
   "contact": {
     "title": "Contact Us",
@@ -218,19 +240,23 @@
       "description": "Our support team is always ready to answer your questions.",
       "phone": {
         "title": "Hotline",
-        "content": "1900 1234"
+        "content": "1900 1234",
+        "subContent": "Mon - Sun (24/7)"
       },
       "email": {
         "title": "Email",
-        "content": "support@digitransport.com"
+        "content": "support@digitransport.com",
+        "subContent": "Response within 24h"
       },
       "address": {
         "title": "Address",
-        "content": "123 ABC Street, XYZ District, Da Nang City"
+        "content": "12th Floor, Digi Tower",
+        "subContent": "Hanoi, Vietnam"
       },
       "hours": {
         "title": "Business Hours",
-        "content": "Monday - Saturday: 7:00 AM - 10:00 PM"
+        "content": "08:00 - 18:00",
+        "subContent": "Business hours"
       }
     },
     "form": {
@@ -249,7 +275,13 @@
       "message": "Message",
       "submit": "Send Message",
       "sending": "Sending...",
-      "successMessage": "Thank you for contacting us! We will respond as soon as possible."
+      "successMessage": "Thank you for contacting us! We will respond as soon as possible.",
+      "placeholders": {
+        "name": "John Doe",
+        "phone": "0912 345 678",
+        "email": "example@email.com",
+        "message": "Your message content..."
+      }
     }
   },
   "footer": {

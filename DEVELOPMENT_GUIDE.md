@@ -970,6 +970,297 @@ Trong `landing-header.tsx`, nút "Sign Up" đã được áp dụng glassmorphis
 
 ---
 
+## 🎭 Liquid Glass Pill với Spring Animation
+
+### Tổng Quan
+
+**Liquid Glass Pill** là một hiệu ứng UI tinh tế tạo ra cảm giác "giọt nước" di chuyển mượt mà giữa các tab/button khi chuyển đổi. Hiệu ứng này sử dụng **Framer Motion's `layoutId`** kết hợp với **Spring Animation** để tạo chuyển động tự nhiên và mượt mà.
+
+### Đặc Điểm Chính
+
+1. **LayoutId**: Cho phép Framer Motion theo dõi và animate cùng một element khi nó di chuyển
+2. **Spring Animation**: Tạo chuyển động tự nhiên giống như vật lý thực tế
+3. **Smooth Transition**: Chuyển động mượt mà giữa các vị trí
+4. **Visual Feedback**: Người dùng thấy rõ ràng tab nào đang được chọn
+
+### Cấu Trúc Code Chuẩn
+
+```typescript
+import { motion } from "framer-motion";
+
+// Container phải có relative positioning
+<TabsList className="relative ...">
+  {/* Liquid Glass Pill - Chỉ hiện khi active */}
+  {activeTab === "tab1" && (
+    <motion.div
+      layoutId="activeTabGlass"
+      className="absolute left-[...] top-[...] bottom-[...] right-[...] rounded-full bg-white shadow-[...] ring-1 ring-black/5 -z-0"
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
+    />
+  )}
+  {activeTab === "tab2" && (
+    <motion.div
+      layoutId="activeTabGlass"  // CÙNG layoutId!
+      className="absolute left-[...] top-[...] bottom-[...] right-[...] rounded-full bg-white shadow-[...] ring-1 ring-black/5 -z-0"
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
+    />
+  )}
+  
+  {/* Tab triggers với z-index cao hơn */}
+  <TabsTrigger className="relative z-10 ...">Tab 1</TabsTrigger>
+  <TabsTrigger className="relative z-10 ...">Tab 2</TabsTrigger>
+</TabsList>
+```
+
+### Giải Thích Từng Phần
+
+#### 1. LayoutId (QUAN TRỌNG)
+
+```typescript
+layoutId="activeTabGlass"
+```
+
+- **Cùng một `layoutId`** cho tất cả các pill ở các vị trí khác nhau
+- Framer Motion sẽ tự động animate giữa các vị trí khi `layoutId` giống nhau
+- Khi state thay đổi, pill sẽ "di chuyển" từ vị trí này sang vị trí khác
+
+#### 2. Spring Animation Configuration
+
+```typescript
+transition={{
+  type: "spring",
+  stiffness: 300,  // Độ cứng của lò xo (cao = nhanh hơn)
+  damping: 30,     // Độ giảm dao động (cao = ít bounce hơn)
+}}
+```
+
+**Tham số:**
+- `stiffness` (100-500): 
+  - **100-200**: Chậm, mềm mại
+  - **300**: Cân bằng tốt (khuyến nghị)
+  - **400-500**: Nhanh, cứng
+  
+- `damping` (10-50):
+  - **10-20**: Nhiều bounce, dao động
+  - **30**: Cân bằng tốt (khuyến nghị)
+  - **40-50**: Ít bounce, mượt mà
+
+#### 3. Positioning
+
+```typescript
+className="absolute left-[calc(0.375rem+1px)] top-[calc(0.375rem+1px)] bottom-[calc(0.375rem+1px)] right-[calc(50%+0.375rem-1px)]"
+```
+
+- Sử dụng `calc()` để tính toán chính xác vị trí dựa trên padding của container
+- `left` và `right` thay đổi tùy theo tab nào active
+- `top` và `bottom` giữ nguyên để tạo chiều cao cố định
+
+#### 4. Z-Index Layering
+
+```typescript
+// Pill ở phía sau
+className="... -z-0"
+
+// Tab triggers ở phía trước
+className="... relative z-10"
+```
+
+- Pill phải có `z-index` thấp hơn để nằm phía sau content
+- Tab triggers phải có `z-index` cao hơn để hiển thị trên pill
+
+### Ví Dụ Hoàn Chỉnh
+
+#### Tabs với Liquid Glass Pill
+
+```typescript
+import { motion } from "framer-motion";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+
+function MyTabs() {
+  const [activeTab, setActiveTab] = useState("tab1");
+
+  return (
+    <Tabs value={activeTab} onValueChange={setActiveTab}>
+      <TabsList className="grid w-full grid-cols-2 bg-slate-900/5 backdrop-blur-md p-1.5 rounded-full h-auto border border-white/20 shadow-inner relative">
+        {/* Liquid Glass Pill */}
+        {activeTab === "tab1" && (
+          <motion.div
+            layoutId="activeTabGlass"
+            className="absolute left-[calc(0.375rem+1px)] top-[calc(0.375rem+1px)] bottom-[calc(0.375rem+1px)] right-[calc(50%+0.375rem-1px)] rounded-full bg-white shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)] ring-1 ring-black/5 -z-0"
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+            }}
+          />
+        )}
+        {activeTab === "tab2" && (
+          <motion.div
+            layoutId="activeTabGlass"
+            className="absolute left-[calc(50%+0.375rem-1px)] top-[calc(0.375rem+1px)] bottom-[calc(0.375rem+1px)] right-[calc(0.375rem+1px)] rounded-full bg-white shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)] ring-1 ring-black/5 -z-0"
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+            }}
+          />
+        )}
+        
+        {/* Tab Triggers */}
+        <TabsTrigger value="tab1" className="relative z-10 rounded-full py-3 transition-colors">
+          Tab 1
+        </TabsTrigger>
+        <TabsTrigger value="tab2" className="relative z-10 rounded-full py-3 transition-colors">
+          Tab 2
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
+  );
+}
+```
+
+### Ví Dụ Thực Tế trong Dự Án
+
+#### 1. Landing Hero Tabs (`landing-hero.tsx`)
+
+```typescript
+<TabsList className="grid w-full grid-cols-2 bg-slate-900/5 backdrop-blur-md p-1.5 rounded-full h-auto border border-white/20 shadow-inner relative">
+  {/* Liquid Glass Pill */}
+  {bookingType === "carpool" && (
+    <motion.div
+      layoutId="activeTabGlass"
+      className="absolute left-[calc(0.375rem+1px)] top-[calc(0.375rem+1px)] bottom-[calc(0.375rem+1px)] right-[calc(50%+0.375rem-1px)] rounded-full bg-white shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)] ring-1 ring-black/5 -z-0"
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
+    />
+  )}
+  {bookingType === "private" && (
+    <motion.div
+      layoutId="activeTabGlass"
+      className="absolute left-[calc(50%+0.375rem-1px)] top-[calc(0.375rem+1px)] bottom-[calc(0.375rem+1px)] right-[calc(0.375rem+1px)] rounded-full bg-white shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)] ring-1 ring-black/5 -z-0"
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
+    />
+  )}
+  
+  <TabsTrigger value="carpool" className="relative z-10 ...">
+    Carpool
+  </TabsTrigger>
+  <TabsTrigger value="private" className="relative z-10 ...">
+    Private
+  </TabsTrigger>
+</TabsList>
+```
+
+#### 2. Header Navigation (`landing-header.tsx`)
+
+```typescript
+{navigationItems.map((item) => {
+  const isActive = activeNav === item.href;
+  return (
+    <a key={item.key} href={item.href} className="relative px-4 py-2 ...">
+      {/* Liquid Glass Pill */}
+      {isActive && (
+        <motion.div
+          layoutId="activeNavGlass"
+          className="absolute inset-0 rounded-full bg-[var(--color-dark-blue)]/10 backdrop-blur-sm border border-[var(--color-dark-blue)]/20 shadow-sm -z-10"
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+          }}
+        />
+      )}
+      <span className="relative z-10">{item.label}</span>
+    </a>
+  );
+})}
+```
+
+### Best Practices
+
+1. ✅ **Luôn sử dụng cùng `layoutId`**: Tất cả các pill ở các vị trí khác nhau phải có cùng `layoutId`
+2. ✅ **Container phải `relative`**: Để absolute positioning hoạt động đúng
+3. ✅ **Z-index layering**: Pill ở `-z-0`, content ở `z-10`
+4. ✅ **Spring parameters**: Sử dụng `stiffness: 300, damping: 30` cho cân bằng tốt
+5. ✅ **Conditional rendering**: Chỉ render pill khi tab active để tối ưu performance
+6. ✅ **Consistent styling**: Tất cả các pill phải có cùng styling (chỉ khác vị trí)
+
+### Tùy Chỉnh Spring Animation
+
+#### Chậm và Mềm Mại
+```typescript
+transition={{
+  type: "spring",
+  stiffness: 200,
+  damping: 25,
+}}
+```
+
+#### Nhanh và Cứng
+```typescript
+transition={{
+  type: "spring",
+  stiffness: 400,
+  damping: 35,
+}}
+```
+
+#### Nhiều Bounce (Playful)
+```typescript
+transition={{
+  type: "spring",
+  stiffness: 300,
+  damping: 20,
+}}
+```
+
+#### Mượt Mà (Smooth)
+```typescript
+transition={{
+  type: "spring",
+  stiffness: 300,
+  damping: 40,
+}}
+```
+
+### Lưu Ý Quan Trọng
+
+1. ⚠️ **Performance**: Chỉ render pill khi cần thiết (conditional rendering)
+2. ⚠️ **LayoutId uniqueness**: Mỗi nhóm tabs phải có `layoutId` riêng (ví dụ: `"activeTabGlass"` vs `"activeNavGlass"`)
+3. ⚠️ **Positioning accuracy**: Sử dụng `calc()` để tính toán chính xác vị trí dựa trên padding
+4. ⚠️ **Browser support**: Framer Motion yêu cầu React 18+ và hỗ trợ CSS transforms
+
+### Khi Nào Sử Dụng Liquid Glass Pill?
+
+✅ **Nên sử dụng khi:**
+- Có nhiều tabs/buttons cần chuyển đổi
+- Cần visual feedback rõ ràng cho active state
+- Muốn tạo hiệu ứng hiện đại và mượt mà
+- Tabs có cùng kích thước và layout
+
+❌ **Không nên sử dụng khi:**
+- Tabs có kích thước khác nhau (pill sẽ không fit)
+- Cần performance tối đa (một chút overhead từ animation)
+- Tabs động (số lượng thay đổi) - khó tính toán vị trí
+
+---
+
 ## 🛣️ Routing
 
 ### Thêm Route mới
@@ -1153,13 +1444,113 @@ import { LanguageToggle } from '@/components/language-toggle';
 
 Ngôn ngữ được lưu trong `localStorage` và tự động phát hiện từ trình duyệt nếu chưa có preference.
 
+### AnimatedText Component cho Language Switching
+
+Để tạo animation mượt mà khi chuyển đổi ngôn ngữ, **TẤT CẢ** text translations trong tất cả các page phải được wrap bằng `AnimatedText` component.
+
+#### Component Location
+
+File: `src/components/animated-text.tsx`
+
+#### Cách Sử Dụng
+
+```typescript
+import { AnimatedText } from '@/components/animated-text';
+import { useTranslation } from 'react-i18next';
+
+function MyComponent() {
+  const { t } = useTranslation();
+  
+  return (
+    <div>
+      {/* ✅ ĐÚNG: Wrap translation với AnimatedText */}
+      <h1>
+        <AnimatedText>{t('hero.title')}</AnimatedText>
+      </h1>
+      
+      {/* ✅ ĐÚNG: Cho cả description */}
+      <p>
+        <AnimatedText>{t('hero.subtitle')}</AnimatedText>
+      </p>
+      
+      {/* ✅ ĐÚNG: Cho button text */}
+      <Button>
+        <AnimatedText>{t('common.signIn')}</AnimatedText>
+      </Button>
+      
+      {/* ❌ SAI: Không wrap AnimatedText */}
+      <h1>{t('hero.title')}</h1>
+    </div>
+  );
+}
+```
+
+#### Animation Types
+
+`AnimatedText` hỗ trợ 3 loại animation:
+
+```typescript
+// Fade (mặc định)
+<AnimatedText>{t('text')}</AnimatedText>
+
+// Slide Up
+<AnimatedText animationType="slideUp">{t('text')}</AnimatedText>
+
+// Slide Down
+<AnimatedText animationType="slideDown">{t('text')}</AnimatedText>
+```
+
+#### Components Đã Áp Dụng AnimatedText
+
+Tất cả landing page components đã được cập nhật:
+
+- ✅ **landing-hero.tsx**: Title, subtitle, buttons, labels, tab content
+- ✅ **landing-header.tsx**: Navigation items, buttons
+- ✅ **landing-how-it-works.tsx**: Title, subtitle, step titles và descriptions
+- ✅ **landing-popular-routes.tsx**: Title, subtitle, route names, prices, button
+- ✅ **landing-mobile-app.tsx**: Title, subtitle, buttons, mockup text
+- ✅ **landing-pricing.tsx**: Title, subtitle, plan names, prices, features, buttons
+- ✅ **landing-contact.tsx**: Title, subtitle, info titles, form labels, buttons
+- ✅ **landing-promotions.tsx**: Title, subtitle, promotion content, buttons
+- ✅ **landing-testimonials.tsx**: Title, subtitle
+- ✅ **landing-footer.tsx**: Company info, links, newsletter, copyright
+- ✅ **landing-usp.tsx**: Title, item titles và descriptions
+
+#### Best Practices
+
+1. ✅ **Luôn wrap translations với AnimatedText**: Đảm bảo animation khi đổi ngôn ngữ
+2. ✅ **Sử dụng cho tất cả user-visible text**: Title, subtitle, button text, labels
+3. ✅ **Không cần wrap cho static text**: Hardcoded text không cần animation
+4. ✅ **Không wrap cho placeholder**: Placeholder text không thay đổi khi đổi ngôn ngữ
+5. ✅ **Sử dụng animationType phù hợp**: 
+   - `fade` cho text thông thường
+   - `slideUp` cho headings quan trọng
+   - `slideDown` cho descriptions
+
+#### Ví Dụ Thực Tế
+
+```typescript
+// landing-usp.tsx
+<h2 className="text-3xl md:text-4xl font-bold mb-4 text-[var(--color-dark-blue)]">
+  <AnimatedText>{t('usp.title')}</AnimatedText>
+</h2>
+
+<h3 className="text-xl font-bold mb-3 text-[var(--color-dark-blue)]">
+  <AnimatedText>{t(`usp.items.${item.key}.title`)}</AnimatedText>
+</h3>
+<p className="text-gray-600 text-sm leading-relaxed">
+  <AnimatedText>{t(`usp.items.${item.key}.description`)}</AnimatedText>
+</p>
+```
+
 ### Best Practices
 
 1. ✅ **Luôn sử dụng translation keys** thay vì hardcode text
-2. ✅ **Tổ chức translations theo sections** (common, hero, pricing, etc.)
-3. ✅ **Sử dụng nested keys** để dễ quản lý: `pricing.passenger.name`
-4. ✅ **Đảm bảo cả 2 ngôn ngữ đều có đầy đủ translations**
-5. ✅ **Sử dụng variables** cho dynamic content: `{{year}}`, `{{name}}`
+2. ✅ **Luôn wrap translations với AnimatedText** để có animation khi đổi ngôn ngữ
+3. ✅ **Tổ chức translations theo sections** (common, hero, pricing, etc.)
+4. ✅ **Sử dụng nested keys** để dễ quản lý: `pricing.passenger.name`
+5. ✅ **Đảm bảo cả 2 ngôn ngữ đều có đầy đủ translations**
+6. ✅ **Sử dụng variables** cho dynamic content: `{{year}}`, `{{name}}`
 
 ---
 

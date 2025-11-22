@@ -11,6 +11,7 @@ import { Caravan } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/language-toggle";
+import { AnimatedText } from "@/components/animated-text";
 
 interface NavigationItem {
   key: string;
@@ -28,7 +29,6 @@ const NAVIGATION_ITEMS: NavigationItem[] = [
   { key: "header.about", href: "#about" },
   { key: "header.bookingGuide", href: "#booking-guide" },
   { key: "header.forPartners", href: "#for-partners" },
-  { key: "header.promotions", href: "#promotions" },
   { key: "header.contact", href: "#contact" },
 ] as const;
 
@@ -421,7 +421,9 @@ function LandingHeader() {
                   )}
 
                   {/* Label nằm đè lên trên lớp kính */}
-                  <span className="relative z-10">{item.label}</span>
+                  <span className="relative z-10">
+                    <AnimatedText>{item.label}</AnimatedText>
+                  </span>
                 </a>
               );
             })}
@@ -436,7 +438,7 @@ function LandingHeader() {
                 variant="ghost"
                 className="text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 hover:bg-transparent"
               >
-                {t("common.logout")}
+                <AnimatedText>{t("common.logout")}</AnimatedText>
               </Button>
             ) : (
               <>
@@ -446,14 +448,14 @@ function LandingHeader() {
                   className="text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 hover:bg-transparent"
                   aria-label={t("common.signIn")}
                 >
-                  {t("common.signIn")}
+                  <AnimatedText>{t("common.signIn")}</AnimatedText>
                 </Button>
                 <Button
                   onClick={() => navigate("/register")}
                   className="rounded-full bg-[var(--color-dark-blue)] text-white font-medium shadow-sm hover:bg-[var(--color-dark-blue)]/90 hover:shadow-md transition-all duration-200"
                   aria-label={t("common.signUp")}
                 >
-                  {t("common.signUp")}
+                  <AnimatedText>{t("common.signUp")}</AnimatedText>
                 </Button>
               </>
             )}
@@ -549,7 +551,9 @@ function LandingHeader() {
                       )}
 
                       {/* Label nằm đè lên trên lớp kính */}
-                      <span className="relative z-10">{item.label}</span>
+                      <span className="relative z-10">
+                        <AnimatedText>{item.label}</AnimatedText>
+                      </span>
                     </motion.a>
                   );
                 })}
@@ -570,7 +574,7 @@ function LandingHeader() {
                       variant="ghost"
                       className="w-full justify-start text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 hover:bg-[var(--color-light-blue)]/20"
                     >
-                      {t("common.logout")}
+                      <AnimatedText>{t("common.logout")}</AnimatedText>
                     </Button>
                   ) : (
                     <>
@@ -582,7 +586,7 @@ function LandingHeader() {
                         className="w-full justify-start text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 hover:bg-transparent"
                         aria-label={t("common.signIn")}
                       >
-                        {t("common.signIn")}
+                        <AnimatedText>{t("common.signIn")}</AnimatedText>
                       </Button>
                       <Button
                         onClick={() => {
@@ -592,7 +596,7 @@ function LandingHeader() {
                         className="w-full rounded-full bg-[var(--color-dark-blue)] text-white font-medium shadow-sm hover:bg-[var(--color-dark-blue)]/90 hover:shadow-md transition-all duration-200"
                         aria-label={t("common.signUp")}
                       >
-                        {t("common.signUp")}
+                        <AnimatedText>{t("common.signUp")}</AnimatedText>
                       </Button>
                     </>
                   )}

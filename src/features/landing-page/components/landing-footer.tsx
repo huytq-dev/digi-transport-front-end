@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { AnimatedText } from '@/components/animated-text';
 
 interface SocialLink {
   name: string;
@@ -67,7 +69,6 @@ function LandingFooter() {
     { key: 'header.about', href: '#about' },
     { key: 'header.bookingGuide', href: '#booking-guide' },
     { key: 'header.forPartners', href: '#for-partners' },
-    { key: 'header.promotions', href: '#promotions' },
     { key: 'header.contact', href: '#contact' },
   ];
 
@@ -84,10 +85,18 @@ function LandingFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 lg:col-span-2">
-            <h3 className="text-white text-lg font-semibold mb-4">{t('footer.companyInfo.name')}</h3>
-            <p className="text-sm mb-2 text-white/90">{t('footer.companyInfo.taxCode')}</p>
-            <p className="text-sm mb-2 text-white/90">{t('footer.companyInfo.address')}</p>
-            <p className="text-sm mb-4 text-white/90">{t('footer.companyInfo.hotline')}</p>
+            <h3 className="text-white text-lg font-semibold mb-4">
+              <AnimatedText>{t('footer.companyInfo.name')}</AnimatedText>
+            </h3>
+            <p className="text-sm mb-2 text-white/90">
+              <AnimatedText>{t('footer.companyInfo.taxCode')}</AnimatedText>
+            </p>
+            <p className="text-sm mb-2 text-white/90">
+              <AnimatedText>{t('footer.companyInfo.address')}</AnimatedText>
+            </p>
+            <p className="text-sm mb-4 text-white/90">
+              <AnimatedText>{t('footer.companyInfo.hotline')}</AnimatedText>
+            </p>
             <div className="flex space-x-4" role="list" aria-label="Social media links">
               {SOCIAL_LINKS.map((social) => (
                 <a
@@ -108,7 +117,7 @@ function LandingFooter() {
           {/* Quick Links */}
           <nav aria-labelledby="quick-links-heading">
             <h4 id="quick-links-heading" className="text-white text-sm font-semibold mb-4">
-              {t('footer.quickLinks')}
+              <AnimatedText>{t('footer.quickLinks')}</AnimatedText>
             </h4>
             <ul className="space-y-2 text-sm" role="list">
               {QUICK_LINKS.map((link) => (
@@ -126,7 +135,7 @@ function LandingFooter() {
                     }}
                     className={cn("transition-colors text-[var(--color-light-blue)] hover:text-white")}
                   >
-                    {t(link.key)}
+                    <AnimatedText>{t(link.key)}</AnimatedText>
                   </a>
                 </li>
               ))}
@@ -136,7 +145,7 @@ function LandingFooter() {
           {/* Legal Links */}
           <nav aria-labelledby="legal-heading">
             <h4 id="legal-heading" className="text-white text-sm font-semibold mb-4">
-              {t('footer.legal')}
+              <AnimatedText>{t('footer.legal')}</AnimatedText>
             </h4>
             <ul className="space-y-2 text-sm" role="list">
               {LEGAL_LINKS.map((link) => (
@@ -149,7 +158,7 @@ function LandingFooter() {
                     }}
                     className={cn("transition-colors text-[var(--color-light-blue)] hover:text-white")}
                   >
-                    {t(link.key)}
+                    <AnimatedText>{t(link.key)}</AnimatedText>
                   </a>
                 </li>
               ))}
@@ -160,15 +169,23 @@ function LandingFooter() {
         {/* Newsletter */}
         <div className="mt-8 pt-8 border-t border-white/20">
           <div className="max-w-md">
-            <h4 className="text-white text-sm font-semibold mb-2">{t('footer.newsletter.title')}</h4>
-            <p className="text-sm text-white/80 mb-4">{t('footer.newsletter.subtitle')}</p>
+            <h4 className="text-white text-sm font-semibold mb-2">
+              <AnimatedText>{t('footer.newsletter.title')}</AnimatedText>
+            </h4>
+            <p className="text-sm text-white/80 mb-4">
+              <AnimatedText>{t('footer.newsletter.subtitle')}</AnimatedText>
+            </p>
             <form onSubmit={handleSubscribe} className="flex gap-2">
-              <input
+              <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t('footer.newsletter.placeholder')}
-                className="flex-1 px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[var(--color-light-blue)]"
+                className={cn(
+                  "flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/60",
+                  "focus-visible:ring-2 focus-visible:ring-[var(--color-light-blue)] focus-visible:ring-offset-0",
+                  "focus-visible:bg-white/20 focus-visible:border-white/30"
+                )}
                 required
               />
               <Button
@@ -177,7 +194,7 @@ function LandingFooter() {
                   "bg-[var(--color-dark-blue)] text-white hover:bg-[rgba(74,112,169,0.9)]"
                 )}
               >
-                {t('footer.newsletter.subscribe')}
+                <AnimatedText>{t('footer.newsletter.subscribe')}</AnimatedText>
               </Button>
             </form>
           </div>
@@ -186,7 +203,7 @@ function LandingFooter() {
         {/* Bottom Bar */}
         <div className="mt-8 pt-8 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm text-white/80">
-            {t('footer.copyright', { year: new Date().getFullYear() })}
+            <AnimatedText>{t('footer.copyright', { year: new Date().getFullYear() })}</AnimatedText>
           </p>
           <Button
             onClick={handleScrollToTop}
@@ -195,7 +212,9 @@ function LandingFooter() {
             className="mt-4 sm:mt-0 text-[var(--color-light-blue)] hover:text-white"
             aria-label={t('footer.backToTop')}
           >
-            <span>{t('footer.backToTop')}</span>
+            <span>
+              <AnimatedText>{t('footer.backToTop')}</AnimatedText>
+            </span>
             <svg className="h-4 w-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>

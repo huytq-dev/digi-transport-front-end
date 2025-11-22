@@ -18,23 +18,38 @@
     "contact": "Liên hệ"
   },
   "hero": {
+    "badge": "Nền tảng ghép xe số 1 Việt Nam",
     "title": "Vi vu liên tỉnh – Ghép chuyến thông minh, Tiết kiệm chi phí",
     "subtitle": "Kết nối hành khách và nhà xe uy tín. Lựa chọn đi ghép giá rẻ hoặc bao xe riêng tư chỉ với 1 chạm.",
+    "downloadApp": "Tải ứng dụng ngay",
+    "learnMore": "Tìm hiểu thêm",
     "bookingWidget": {
       "carpoolTab": "Đi ghép",
-      "carpoolTabDesc": "Tiết kiệm",
-      "privateTab": "Bao nguyên xe",
-      "privateTabDesc": "Thoải mái",
+      "carpoolTabDesc": "Tiết kiệm 40%",
+      "privateTab": "Bao xe",
+      "privateTabDesc": "Riêng tư",
       "from": "Điểm đi",
+      "fromPlaceholder": "Nhập điểm đón...",
       "to": "Điểm đến",
-      "date": "Ngày giờ đi",
-      "seats": "Số lượng ghế",
-      "findTrip": "Tìm chuyến ngay",
-      "viewPrice": "Xem giá vé"
+      "toPlaceholder": "Nhập điểm đến...",
+      "date": "Ngày đi",
+      "datePlaceholder": "Chọn ngày",
+      "seats": "Số ghế",
+      "findTrip": "Tìm chuyến ghép",
+      "findPrivateTrip": "Tìm xe bao chuyến",
+      "trustBadge": "Hơn 1,000+ chuyến xe mỗi ngày"
     }
   },
   "usp": {
     "title": "Tại sao chọn Digi Transport?",
+    "badge": "Tại sao chọn Digi Transport?",
+    "subtitle": "Chúng tôi không chỉ cung cấp chuyến đi, chúng tôi mang đến trải nghiệm kết nối liền mạch giữa hành khách và đối tác vận tải.",
+    "stats": {
+      "dailyTrips": "Chuyến đi mỗi ngày",
+      "satisfiedCustomers": "Khách hàng hài lòng",
+      "partners": "Đối tác nhà xe",
+      "provinces": "Tỉnh thành phủ sóng"
+    },
     "items": {
       "smartMatching": {
         "title": "Ghép chuyến thông minh (AI Matching)",
@@ -80,6 +95,9 @@
     "title": "Tuyến đường phổ biến",
     "subtitle": "Khám phá các tuyến đường được yêu thích nhất",
     "viewAll": "Xem tất cả tuyến đường",
+    "badge": "Điểm đến hàng đầu",
+    "duration": "di chuyển",
+    "bookNow": "Đặt vé ngay",
     "routes": {
       "hn-hp": {
         "name": "Hà Nội ⇄ Hải Phòng",
@@ -113,7 +131,8 @@
       }
     },
     "cta": "Đăng ký trở thành Tài xế",
-    "downloadApp": "Tải App Tài xế"
+    "downloadApp": "Tải App Tài xế",
+    "footnote": "Thu nhập thực tế có thể thay đổi tùy theo khu vực và thời gian hoạt động."
   },
   "mobileApp": {
     "title": "Trải nghiệm tốt hơn trên ứng dụng Digi Transport",
@@ -122,6 +141,7 @@
     "googlePlay": "Tải trên Google Play",
     "appStore": "Tải trên App Store",
     "scanQR": "Quét mã QR để tải nhanh",
+    "platforms": "Hỗ trợ iOS & Android",
     "mockupTitle": "Digi Transport",
     "mockupSubtitle": "Theo dõi chuyến đi của bạn"
   },
@@ -202,13 +222,15 @@
         "Tư vấn và hỗ trợ chuyên nghiệp"
       ]
     },
+    "popular": "Phổ biến nhất",
     "note": "Lưu ý: Khách hàng không cần trả phí đăng ký, chỉ thanh toán giá vé khi đặt chuyến. Tài xế/nhà xe chỉ trả phí hoa hồng khi có đơn hàng thành công.",
     "contactUs": "Liên hệ chúng tôi",
     "contactUsDesc": "để được tư vấn gói doanh nghiệp phù hợp."
   },
   "testimonials": {
     "title": "Khách Hàng Nói Gì Về Chúng Tôi",
-    "subtitle": "Hãy lắng nghe những chia sẻ từ hành khách đã sử dụng dịch vụ đặt xe và ghép xe của Digi Transport."
+    "subtitle": "Hãy lắng nghe những chia sẻ từ hành khách đã sử dụng dịch vụ đặt xe và ghép xe của Digi Transport.",
+    "badge": "Đánh giá từ khách hàng"
   },
   "contact": {
     "title": "Liên Hệ Với Chúng Tôi",
@@ -218,19 +240,23 @@
       "description": "Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giải đáp mọi thắc mắc của bạn.",
       "phone": {
         "title": "Hotline",
-        "content": "1900 1234"
+        "content": "1900 1234",
+        "subContent": "Thứ 2 - CN (24/7)"
       },
       "email": {
         "title": "Email",
-        "content": "support@digitransport.com"
+        "content": "support@digitransport.com",
+        "subContent": "Phản hồi trong 24h"
       },
       "address": {
         "title": "Địa Chỉ",
-        "content": "123 Đường ABC, Quận XYZ, Đà Nẵng"
+        "content": "Tầng 12, Tòa nhà Digi Tower",
+        "subContent": "Hà Nội, Việt Nam"
       },
       "hours": {
         "title": "Giờ Làm Việc",
-        "content": "Thứ 2 - Thứ 7: 7:00 - 22:00"
+        "content": "08:00 - 18:00",
+        "subContent": "Giờ hành chính"
       }
     },
     "form": {
@@ -249,7 +275,13 @@
       "message": "Nội Dung",
       "submit": "Gửi Tin Nhắn",
       "sending": "Đang gửi...",
-      "successMessage": "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể."
+      "successMessage": "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.",
+      "placeholders": {
+        "name": "Nguyễn Văn A",
+        "phone": "0912 345 678",
+        "email": "example@email.com",
+        "message": "Nội dung tin nhắn..."
+      }
     }
   },
   "footer": {
