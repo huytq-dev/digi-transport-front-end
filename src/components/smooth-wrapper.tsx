@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface SmoothWrapperProps {
   children: React.ReactNode;
@@ -9,18 +10,24 @@ interface SmoothWrapperProps {
 }
 
 export const SmoothWrapper = ({ children, className, layoutId }: SmoothWrapperProps) => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
       // QUAN TRỌNG: Chỉ dùng layout, KHÔNG dùng layoutRoot
-      layout 
+      layout={!shouldReduceMotion}
       
       layoutId={layoutId}
       
-      transition={{
-        // Dùng easeInOut sẽ mượt hơn spring cho việc resize container chứa text
-        layout: { duration: 0.3, ease: "easeInOut" } 
-        // Hoặc nếu thích nảy: type: "spring", stiffness: 300, damping: 30
-      }}
+      transition={
+        shouldReduceMotion
+          ? { layout: { duration: 0 } }
+          : {
+              // Dùng easeInOut sẽ mượt hơn spring cho việc resize container chứa text
+              layout: { duration: 0.3, ease: "easeInOut" },
+              // Hoặc nếu thích nảy: type: "spring", stiffness: 300, damping: 30
+            }
+      }
       
       className={cn(
         // QUAN TRỌNG: 
@@ -28,7 +35,7 @@ export const SmoothWrapper = ({ children, className, layoutId }: SmoothWrapperPr
         // 2. relative: Để định vị chuẩn
         // 3. overflow-hidden: Để che phần text cũ đang trượt ra
         "relative inline-flex items-center justify-start overflow-hidden",
-        "will-change-[width,height]", 
+        !shouldReduceMotion && "will-change-[width,height]", 
         className
       )}
     >

@@ -275,3 +275,64 @@
     animation: shimmer 1.5s infinite;
   }
 }
+
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  /* Reduce backdrop-blur intensity on mobile for better performance */
+  [class*="backdrop-blur-xl"],
+  [class*="backdrop-blur-2xl"] {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  [class*="backdrop-blur-md"] {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  /* Reduce blur radius for large blur effects */
+  [class*="blur-\[100px\]"],
+  [class*="blur-\[120px\]"] {
+    filter: blur(40px) !important;
+  }
+
+  /* Optimize transforms for mobile */
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [class*="animate-"] {
+    animation: none !important;
+  }
+}
+
+/* Touch optimization for mobile */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase tap target sizes */
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Disable hover effects on touch devices */
+  *:hover {
+    transform: none !important;
+  }
+}
