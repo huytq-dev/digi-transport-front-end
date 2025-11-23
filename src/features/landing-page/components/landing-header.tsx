@@ -415,7 +415,7 @@ function LandingHeader() {
             ) : (
               <>
                 <Button
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/auth/sign-in")}
                   variant="ghost"
                   className="text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 hover:bg-transparent"
                   aria-label={t("common.signIn")}
@@ -423,7 +423,7 @@ function LandingHeader() {
                   <AnimatedText>{t("common.signIn")}</AnimatedText>
                 </Button>
                 <Button
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate("/auth/sign-up")}
                   className="rounded-full bg-[var(--color-dark-blue)] text-white font-medium shadow-sm hover:bg-[var(--color-dark-blue)]/90 hover:shadow-md transition-all duration-200"
                   aria-label={t("common.signUp")}
                 >
@@ -547,7 +547,7 @@ function LandingHeader() {
                     <>
                       <Button
                         onClick={() => {
-                          navigate("/login");
+                          navigate("/auth/sign-in");
                           setIsMenuOpen(false);
                         }}
                         className="w-full justify-start text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 hover:bg-transparent"
@@ -557,7 +557,7 @@ function LandingHeader() {
                       </Button>
                       <Button
                         onClick={() => {
-                          navigate("/register");
+                          navigate("/auth/sign-up");
                           setIsMenuOpen(false);
                         }}
                         className="w-full rounded-full bg-[var(--color-dark-blue)] text-white font-medium shadow-sm hover:bg-[var(--color-dark-blue)]/90 hover:shadow-md transition-all duration-200"

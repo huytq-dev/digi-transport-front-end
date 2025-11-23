@@ -69,7 +69,7 @@ function LandingPricing() {
         contactSection.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      navigate('/register');
+      navigate('/auth/sign-up');
     }
   }, [navigate]);
 
