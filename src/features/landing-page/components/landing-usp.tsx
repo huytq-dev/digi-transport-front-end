@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, Users, Shield, CreditCard, TrendingUp, Car, MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sparkles, Users, Shield, CreditCard, TrendingUp, Car, MapPin, Smartphone, QrCode } from 'lucide-react';
 import { AnimatedText } from '@/components/animated-text';
+import { SmoothWrapper } from '@/components/smooth-wrapper';
 import { motion, useInView } from 'framer-motion';
 
 // Component để animate số
@@ -174,7 +176,9 @@ function LandingUSP() {
 
           {/* Title */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-[var(--color-dark-blue)] tracking-tight leading-tight">
-            <AnimatedText>{t('usp.title')}</AnimatedText>
+            <SmoothWrapper className="inline-block">
+              <AnimatedText>{t('usp.title')}</AnimatedText>
+            </SmoothWrapper>
           </h2>
 
           {/* Subtitle */}
@@ -210,7 +214,9 @@ function LandingUSP() {
                     <AnimatedNumber value={stat.value} duration={2} />
                   </p>
                 </div>
-                <p className="text-sm font-medium text-gray-600">{stat.label}</p>
+                <p className="text-sm font-medium text-gray-600">
+                  <AnimatedText>{stat.label}</AnimatedText>
+                </p>
               </motion.div>
             );
           })}
@@ -254,7 +260,9 @@ function LandingUSP() {
                     
                     {/* Title */}
                     <CardTitle className="text-xl font-bold text-[var(--color-dark-blue)] group-hover:text-[var(--color-dark-blue)]/80 transition-colors">
-                    <AnimatedText>{t(`usp.items.${item.key}.title`)}</AnimatedText>
+                      <SmoothWrapper className="inline-block">
+                        <AnimatedText>{t(`usp.items.${item.key}.title`)}</AnimatedText>
+                      </SmoothWrapper>
                     </CardTitle>
                   </CardHeader>
 
@@ -269,6 +277,67 @@ function LandingUSP() {
             );
           })}
         </div>
+
+        {/* Mobile App CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-20 md:mt-24"
+        >
+          <Card className="bg-gradient-to-br from-[var(--color-light-blue)]/20 to-[var(--color-dark-blue)]/10 border-[var(--color-light-blue)]/30 overflow-hidden">
+            <CardContent className="p-8 md:p-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Smartphone className="h-6 w-6 text-[var(--color-dark-blue)]" />
+                    <h3 className="text-2xl md:text-3xl font-bold text-[var(--color-dark-blue)]">
+                      <AnimatedText>{t('mobileApp.title')}</AnimatedText>
+                    </h3>
+                  </div>
+                  <p className="text-gray-700 mb-6 leading-relaxed">
+                    <AnimatedText>{t('mobileApp.subtitle')}</AnimatedText>
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button
+                      size="lg"
+                      className="bg-white text-[var(--color-dark-blue)] hover:bg-gray-50 rounded-xl flex items-center gap-2 px-6"
+                      onClick={() => window.open('https://play.google.com/store', '_blank')}
+                    >
+                      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
+                      </svg>
+                      <AnimatedText>{t('mobileApp.googlePlay')}</AnimatedText>
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border-[var(--color-dark-blue)]/30 text-[var(--color-dark-blue)] hover:bg-white/50 rounded-xl flex items-center gap-2 px-6"
+                      onClick={() => window.open('https://apps.apple.com', '_blank')}
+                    >
+                      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                      </svg>
+                      <AnimatedText>{t('mobileApp.appStore')}</AnimatedText>
+                    </Button>
+                  </div>
+                </div>
+                <div className="flex justify-center md:justify-end">
+                  <div className="inline-flex items-center gap-4 p-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-white/50 shadow-lg">
+                    <QrCode className="h-20 w-20 text-[var(--color-dark-blue)]" />
+                    <div>
+                      <p className="text-sm font-semibold text-[var(--color-dark-blue)]">
+                        <AnimatedText>{t('mobileApp.scanQR')}</AnimatedText>
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">{t('mobileApp.platforms')}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </section>
   );

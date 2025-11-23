@@ -235,6 +235,7 @@
   "contact": {
     "title": "Contact Us",
     "subtitle": "We're always here to help. Contact us through the channels below or fill out the form.",
+    "supportBadge": "24/7 Support",
     "info": {
       "title": "Contact Information",
       "description": "Our support team is always ready to answer your questions.",
@@ -251,11 +252,11 @@
       "address": {
         "title": "Address",
         "content": "12th Floor, Digi Tower",
-        "subContent": "Hanoi, Vietnam"
+        "subContent": "Da Nang, Vietnam"
       },
       "hours": {
         "title": "Business Hours",
-        "content": "08:00 - 18:00",
+        "content": "08:00 - 17:00",
         "subContent": "Business hours"
       }
     },
@@ -275,7 +276,26 @@
       "message": "Message",
       "submit": "Send Message",
       "sending": "Sending...",
+      "successTitle": "Successfully Sent!",
       "successMessage": "Thank you for contacting us! We will respond as soon as possible.",
+      "successSubtext": "We will contact you within 24 hours.",
+      "errorMessage": "An error occurred. Please try again later.",
+      "validation": {
+        "name": {
+          "min": "Name must be at least 2 characters",
+          "max": "Name must not exceed 50 characters"
+        },
+        "phone": "Invalid phone number. Please enter a valid Vietnamese phone number (10 digits, starting with 0)",
+        "email": {
+          "required": "Email is required",
+          "invalid": "Invalid email address"
+        },
+        "subject": "Please select a subject",
+        "message": {
+          "min": "Message must be at least 10 characters",
+          "max": "Message must not exceed 1000 characters"
+        }
+      },
       "placeholders": {
         "name": "John Doe",
         "phone": "0912 345 678",

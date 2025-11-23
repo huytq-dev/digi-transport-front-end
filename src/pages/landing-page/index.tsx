@@ -5,9 +5,6 @@ import LandingHeader from '@/features/landing-page/components/landing-header';
 import LandingHero from '@/features/landing-page/components/landing-hero';
 import LandingUSP from '@/features/landing-page/components/landing-usp';
 import LandingHowItWorks from '@/features/landing-page/components/landing-how-it-works';
-import LandingPopularRoutes from '@/features/landing-page/components/landing-popular-routes';
-import LandingDriverRecruitment from '@/features/landing-page/components/landing-driver-recruitment';
-import LandingMobileApp from '@/features/landing-page/components/landing-mobile-app';
 import LandingPricing from '@/features/landing-page/components/landing-pricing';
 import LandingTestimonials from '@/features/landing-page/components/landing-testimonials';
 import LandingContact from '@/features/landing-page/components/landing-contact';
@@ -21,9 +18,7 @@ function LandingPage() {
         <LandingHero />
         <LandingUSP />
         <LandingHowItWorks />
-        <LandingPopularRoutes />
-        <LandingDriverRecruitment />
-        <LandingMobileApp />
+        {/* <LandingPromotions /> */}
         <LandingPricing />
         <LandingTestimonials />
         <LandingContact />

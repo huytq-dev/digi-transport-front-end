@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { AnimatedText } from '@/components/animated-text';
+import { SmoothWrapper } from '@/components/smooth-wrapper';
 
 function LandingHowItWorks() {
   const { t } = useTranslation();
@@ -62,7 +63,9 @@ function LandingHowItWorks() {
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-[var(--color-dark-blue)] tracking-tight">
-            <AnimatedText>{t('howItWorks.title')}</AnimatedText>
+            <SmoothWrapper className="inline-block">
+              <AnimatedText>{t('howItWorks.title')}</AnimatedText>
+            </SmoothWrapper>
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
             <AnimatedText>{t('howItWorks.subtitle')}</AnimatedText>
@@ -120,8 +123,10 @@ function LandingHowItWorks() {
                   
                   {/* Content */}
                 <h3 className="text-xl font-bold mb-3 text-[var(--color-dark-blue)] group-hover:text-[var(--color-dark-blue)]/80 transition-colors">
+                  <SmoothWrapper className="inline-block">
                     <AnimatedText>{t(`howItWorks.steps.${step.key}.title`)}</AnimatedText>
-                  </h3>
+                  </SmoothWrapper>
+                </h3>
                 <p className="text-gray-600 text-sm leading-relaxed px-4">
                     <AnimatedText>{t(`howItWorks.steps.${step.key}.description`)}</AnimatedText>
                   </p>

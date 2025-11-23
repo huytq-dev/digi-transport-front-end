@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Gift, Percent } from 'lucide-react';
 import { AnimatedText } from '@/components/animated-text';
+import { SmoothWrapper } from '@/components/smooth-wrapper';
 import { motion } from 'framer-motion';
 
 function LandingPromotions() {
@@ -46,7 +47,9 @@ function LandingPromotions() {
           <div className="inline-flex items-center gap-2 mb-4">
             <Gift className="h-8 w-8 text-[var(--color-dark-blue)]" />
             <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-dark-blue)]">
-              <AnimatedText>{t('header.promotions')}</AnimatedText>
+              <SmoothWrapper className="inline-block">
+                <AnimatedText>{t('header.promotions')}</AnimatedText>
+              </SmoothWrapper>
             </h2>
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -83,7 +86,9 @@ function LandingPromotions() {
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <h3 className="text-xl font-bold mb-2">
-                          <AnimatedText>{promoData.title}</AnimatedText>
+                          <SmoothWrapper className="inline-block">
+                            <AnimatedText>{promoData.title}</AnimatedText>
+                          </SmoothWrapper>
                         </h3>
                         <p className="text-white/90 text-sm mb-4">
                           <AnimatedText>{promoData.description}</AnimatedText>
