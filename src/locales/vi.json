@@ -235,6 +235,7 @@
   "contact": {
     "title": "Liên Hệ Với Chúng Tôi",
     "subtitle": "Chúng tôi luôn sẵn sàng hỗ trợ bạn. Hãy liên hệ với chúng tôi qua các kênh sau hoặc điền form bên dưới.",
+    "supportBadge": "Hỗ trợ 24/7",
     "info": {
       "title": "Thông Tin Liên Hệ",
       "description": "Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giải đáp mọi thắc mắc của bạn.",
@@ -251,11 +252,11 @@
       "address": {
         "title": "Địa Chỉ",
         "content": "Tầng 12, Tòa nhà Digi Tower",
-        "subContent": "Hà Nội, Việt Nam"
+        "subContent": "Đà Nẵng, Việt Nam"
       },
       "hours": {
         "title": "Giờ Làm Việc",
-        "content": "08:00 - 18:00",
+        "content": "08:00 - 17:00",
         "subContent": "Giờ hành chính"
       }
     },
@@ -275,7 +276,26 @@
       "message": "Nội Dung",
       "submit": "Gửi Tin Nhắn",
       "sending": "Đang gửi...",
+      "successTitle": "Gửi thành công!",
       "successMessage": "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.",
+      "successSubtext": "Chúng tôi sẽ liên hệ lại với bạn trong vòng 24 giờ.",
+      "errorMessage": "Có lỗi xảy ra. Vui lòng thử lại sau.",
+      "validation": {
+        "name": {
+          "min": "Tên phải có ít nhất 2 ký tự",
+          "max": "Tên không được quá 50 ký tự"
+        },
+        "phone": "Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam (10 số, bắt đầu bằng 0)",
+        "email": {
+          "required": "Email là bắt buộc",
+          "invalid": "Email không hợp lệ"
+        },
+        "subject": "Vui lòng chọn chủ đề",
+        "message": {
+          "min": "Tin nhắn phải có ít nhất 10 ký tự",
+          "max": "Tin nhắn không được quá 1000 ký tự"
+        }
+      },
       "placeholders": {
         "name": "Nguyễn Văn A",
         "phone": "0912 345 678",
