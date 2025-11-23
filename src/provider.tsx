@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from '@/redux/store';
+import { ThemeProvider } from '@/components/theme/theme-provider';
+import { Toaster } from '@/components/ui/sonner';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -11,7 +13,10 @@ export const Providers = ({ children }: ProvidersProps) => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        {children}
+        <ThemeProvider defaultTheme="light" storageKey="digi-transport-theme">
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </BrowserRouter>
     </Provider>
   );

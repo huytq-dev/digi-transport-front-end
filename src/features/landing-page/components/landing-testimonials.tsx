@@ -1,12 +1,12 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { AnimatedText } from '@/components/animated-text';
-import { Quote, Star, ArrowLeft, ArrowRight } from 'lucide-react';
+import { SmoothWrapper } from '@/components/smooth-wrapper';
+import { Quote, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Testimonial {
@@ -80,44 +80,27 @@ function LandingTestimonials() {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const maxDesktopIndex = useMemo(() => Math.max(0, TESTIMONIALS.length - 3), []);
-  const maxMobileIndex = useMemo(() => Math.max(0, TESTIMONIALS.length - 1), []);
+  // Tính số nhóm testimonials (mỗi nhóm 3)
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil(TESTIMONIALS.length / itemsPerPage);
 
-  const visibleTestimonials = useMemo(() => {
-    const endIndex = Math.min(currentIndex + 3, TESTIMONIALS.length);
-    return TESTIMONIALS.slice(currentIndex, endIndex);
+  // Lấy testimonials hiện tại để hiển thị
+  const displayedTestimonials = useMemo(() => {
+    const start = currentIndex * itemsPerPage;
+    return TESTIMONIALS.slice(start, start + itemsPerPage);
   }, [currentIndex]);
 
-  const handlePrevious = useCallback(() => {
-    setCurrentIndex((prev) => {
-      if (prev <= 0) return maxDesktopIndex;
-      return prev - 1;
-    });
-  }, [maxDesktopIndex]);
+  // Auto-play carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalPages);
+    }, 5000); // Chuyển đổi mỗi 5 giây
 
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prev) => {
-      if (prev >= maxDesktopIndex) return 0;
-      return prev + 1;
-    });
-  }, [maxDesktopIndex]);
+    return () => clearInterval(interval);
+  }, [totalPages]);
 
-  const handleMobilePrevious = useCallback(() => {
-    setCurrentIndex((prev) => {
-      if (prev <= 0) return maxMobileIndex;
-      return prev - 1;
-    });
-  }, [maxMobileIndex]);
-
-  const handleMobileNext = useCallback(() => {
-    setCurrentIndex((prev) => {
-      if (prev >= maxMobileIndex) return 0;
-      return prev + 1;
-    });
-  }, [maxMobileIndex]);
-
-  const handleDesktopDotClick = useCallback((pageIndex: number) => {
-    setCurrentIndex(pageIndex * 3);
+  const handleDotClick = useCallback((index: number) => {
+    setCurrentIndex(index);
   }, []);
 
   const renderStars = useCallback((rating: number) => {
@@ -130,10 +113,10 @@ function LandingTestimonials() {
   }, []);
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden bg-white" aria-label="Customer testimonials">
+    <section className="relative py-20 md:py-32 overflow-hidden bg-[var(--color-cream)]/20" aria-label="Customer testimonials">
       {/* Background Decoration */}
       {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-[var(--color-cream)]/10 to-white -z-20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-cream)]/30 via-[var(--color-cream)]/20 to-white -z-20" />
       
       {/* Decorative blobs - different positions and colors */}
       <motion.div
@@ -192,196 +175,84 @@ function LandingTestimonials() {
           </motion.div>
 
           <h2 className="text-3xl md:text-4xl font-extrabold mb-6 text-[var(--color-dark-blue)] tracking-tight">
-            <AnimatedText>{t('testimonials.title')}</AnimatedText>
+            <SmoothWrapper className="inline-block">
+              <AnimatedText>{t('testimonials.title')}</AnimatedText>
+            </SmoothWrapper>
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
             <AnimatedText>{t('testimonials.subtitle')}</AnimatedText>
           </p>
         </motion.div>
 
-        {/* Desktop Grid */}
-        <div className="hidden md:block relative overflow-hidden min-h-[400px]">
-          <AnimatePresence mode="wait" initial={false}>
+        {/* Testimonials Grid with Auto-play */}
+        <div className="relative">
+          <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
-              transition={{
-                duration: 0.5,
-                ease: [0.4, 0, 0.2, 1],
-              }}
-              className="grid grid-cols-3 gap-8"
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
             >
-              {visibleTestimonials.map((testimonial, idx) => (
+              {displayedTestimonials.map((testimonial, idx) => (
                 <motion.div
                   key={`${testimonial.id}-${currentIndex}`}
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: idx * 0.1,
-                    ease: [0.4, 0, 0.2, 1],
-                  }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="h-full"
                 >
                   <Card className="h-full flex flex-col border-0 bg-white/70 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 rounded-[2rem] border-t border-white/60">
-                    <CardContent className="p-8 flex-grow relative">
+                    <CardContent className="p-6 md:p-8 flex-grow relative">
                       {/* Decorative Quote Icon */}
-                      <Quote className="absolute top-6 right-6 h-10 w-10 text-[var(--color-light-blue)]/20 -z-0 rotate-12" />
+                      <Quote className="absolute top-4 right-4 h-8 w-8 text-[var(--color-light-blue)]/20 -z-0 rotate-12" />
 
                       {/* Stars */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: idx * 0.1 + 0.2 }}
-                        className="flex items-center gap-1 mb-6 relative z-10"
-                      >
+                      <div className="flex items-center gap-1 mb-4 relative z-10">
                         {renderStars(testimonial.rating)}
-                      </motion.div>
+                      </div>
 
                       {/* Content */}
-                      <motion.blockquote
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: idx * 0.1 + 0.3 }}
-                        className="text-gray-700 text-base leading-relaxed relative z-10"
-                      >
+                      <blockquote className="text-gray-700 text-sm md:text-base leading-relaxed relative z-10 mb-4">
                         "{testimonial.content}"
-                      </motion.blockquote>
+                      </blockquote>
                     </CardContent>
-                    <CardFooter className="p-8 pt-0 flex items-center gap-4 border-t border-gray-100/50 mt-auto">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: idx * 0.1 + 0.4 }}
-                      >
-                        <Avatar className="h-12 w-12 ring-2 ring-white shadow-md">
-                          <AvatarFallback className="bg-gradient-to-br from-[var(--color-dark-blue)] to-[var(--color-light-blue)] text-white font-bold">
-                            {testimonial.name.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 + 0.5 }}
-                        className="flex-1 min-w-0"
-                      >
-                        <p className="font-bold text-[var(--color-dark-blue)] truncate">{testimonial.name}</p>
+                    <CardFooter className="p-6 md:p-8 pt-0 flex items-center gap-4 border-t border-gray-100/50 mt-auto">
+                      <Avatar className="h-10 w-10 md:h-12 md:w-12 ring-2 ring-white shadow-md">
+                        <AvatarFallback className="bg-gradient-to-br from-[var(--color-dark-blue)] to-[var(--color-light-blue)] text-white font-bold">
+                          {testimonial.name.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-bold text-[var(--color-dark-blue)] truncate text-sm md:text-base">{testimonial.name}</p>
                         <p className="text-xs font-medium text-[var(--color-dark-blue)]/70 truncate uppercase tracking-wide">
                           {testimonial.role}
                         </p>
                         <p className="text-xs text-gray-500 truncate">{testimonial.company}</p>
-                      </motion.div>
+                      </div>
                     </CardFooter>
                   </Card>
                 </motion.div>
               ))}
             </motion.div>
           </AnimatePresence>
-        </div>
 
-        {/* Mobile Carousel */}
-        <div className="md:hidden relative overflow-hidden py-4 min-h-[300px]">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{
-                duration: 0.4,
-                ease: [0.4, 0, 0.2, 1],
-              }}
-              className="px-2"
-            >
-              <Card className="h-full flex flex-col border-0 bg-white/80 backdrop-blur-md shadow-lg rounded-3xl p-6 border-t border-white/50">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="flex items-center gap-1 mb-4"
-                >
-                  {renderStars(TESTIMONIALS[currentIndex].rating)}
-                </motion.div>
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-gray-700 mb-6 text-sm leading-relaxed min-h-[80px]"
-                >
-                  "{TESTIMONIALS[currentIndex].content}"
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="flex items-center gap-3 mt-auto"
-                >
-                  <div className="h-10 w-10 rounded-full bg-[var(--color-light-blue)]/20 flex items-center justify-center text-[var(--color-dark-blue)] font-bold">
-                    {TESTIMONIALS[currentIndex].name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-bold text-[var(--color-dark-blue)] text-sm">{TESTIMONIALS[currentIndex].name}</p>
-                    <p className="text-xs text-gray-500">{TESTIMONIALS[currentIndex].role}</p>
-                  </div>
-                </motion.div>
-              </Card>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Navigation Controls */}
-        <div className="mt-12 flex flex-col items-center gap-6">
           {/* Dots Indicator */}
-          <div className="flex gap-2">
-            {Array.from({ length: Math.ceil(TESTIMONIALS.length / 3) }, (_, i) => {
-              const isActive = Math.floor(currentIndex / 3) === i;
-              return (
-                <button
-                  key={i}
-                  onClick={() => handleDesktopDotClick(i)}
-                  className={cn(
-                    'h-2 rounded-full transition-all duration-500',
-                    isActive ? 'w-8 bg-[var(--color-dark-blue)]' : 'w-2 bg-gray-300 hover:bg-[var(--color-light-blue)]/50'
-                  )}
-                  aria-label={`Go to page ${i + 1}`}
-                />
-              );
-            })}
-          </div>
-
-          {/* Arrow Buttons (Desktop Only) */}
-          <div className="hidden md:flex gap-4">
-            <Button
-              onClick={handlePrevious}
-              disabled={currentIndex === 0}
-              variant="outline"
-              size="icon"
-              className="rounded-full h-12 w-12 border-gray-200 hover:bg-white hover:border-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)] transition-all disabled:opacity-30"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <Button
-              onClick={handleNext}
-              disabled={currentIndex >= maxDesktopIndex}
-              variant="outline"
-              size="icon"
-              className="rounded-full h-12 w-12 border-gray-200 hover:bg-white hover:border-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)] transition-all disabled:opacity-30"
-            >
-              <ArrowRight className="h-5 w-5" />
-            </Button>
-          </div>
-
-          {/* Mobile Arrows */}
-          <div className="flex md:hidden gap-4">
-            <Button onClick={handleMobilePrevious} size="icon" variant="outline" className="rounded-full">
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <Button onClick={handleMobileNext} size="icon" variant="outline" className="rounded-full">
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+          <div className="flex justify-center items-center gap-2 mt-8">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => handleDotClick(i)}
+                className={cn(
+                  'transition-all duration-300 rounded-full',
+                  currentIndex === i
+                    ? 'w-8 h-2 bg-[var(--color-dark-blue)]'
+                    : 'w-2 h-2 bg-gray-300 hover:bg-[var(--color-light-blue)]/50'
+                )}
+                aria-label={`Go to page ${i + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>

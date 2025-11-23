@@ -7,7 +7,7 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
-import { Caravan } from "lucide-react";
+import { Caravan, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "@/components/language-toggle";
@@ -19,16 +19,17 @@ interface NavigationItem {
 }
 
 // Constants
-const SCROLL_THRESHOLD = 100;
+const SCROLL_THRESHOLD = 50;
 const VIEWPORT_TOP_OFFSET = 150;
 const VIEWPORT_BOTTOM_OFFSET = 100;
 const BOTTOM_THRESHOLD = 200;
 const ANIMATION_DURATION = 0.2;
+const CLICK_TIMEOUT = 1500;
 
 const NAVIGATION_ITEMS: NavigationItem[] = [
   { key: "header.about", href: "#about" },
   { key: "header.bookingGuide", href: "#booking-guide" },
-  { key: "header.forPartners", href: "#for-partners" },
+  { key: "header.forPartners", href: "#pricing" },
   { key: "header.contact", href: "#contact" },
 ] as const;
 
@@ -85,21 +86,16 @@ function LandingHeader() {
     return sections;
   }, []);
 
-  // Optimized scroll detection with throttling
+  // Optimized scroll detection
   useMotionValueEvent(scrollY, "change", (latest) => {
-    // Vẫn cho phép cập nhật hiệu ứng mờ kính của Header
-    setIsScrolled(latest > 50);
+    setIsScrolled(latest > SCROLL_THRESHOLD);
 
-    // [FIX QUAN TRỌNG]: Nếu đang trong quá trình click navigation, bỏ qua TẤT CẢ logic tính toán activeNav
-    if (isClickingRef.current) {
-      return;
-    }
+    // Skip active nav calculation if clicking navigation
+    if (isClickingRef.current) return;
 
     const sections = getSectionElements();
     if (latest < SCROLL_THRESHOLD || sections.length === 0) {
-      if (latest < SCROLL_THRESHOLD) {
-        setActiveNav("");
-      }
+      setActiveNav("");
       return;
     }
 
@@ -111,7 +107,7 @@ function LandingHeader() {
     if (scrollPosition >= documentHeight - BOTTOM_THRESHOLD) {
       const contactSection = sections.find((s) => s.href === "#contact");
       if (contactSection) {
-        setActiveNav((prev) => (prev !== "#contact" ? "#contact" : prev));
+        setActiveNav("#contact");
         return;
       }
     }
@@ -126,9 +122,7 @@ function LandingHeader() {
     );
 
     if (currentSection) {
-      setActiveNav((prev) =>
-        prev !== currentSection.href ? currentSection.href : prev
-      );
+      setActiveNav(currentSection.href);
       return;
     }
 
@@ -138,7 +132,7 @@ function LandingHeader() {
       const closest = sectionsAbove.reduce((prev, curr) =>
         curr.top > prev.top ? curr : prev
       );
-      setActiveNav((prev) => (prev !== closest.href ? closest.href : prev));
+      setActiveNav(closest.href);
       return;
     }
 
@@ -148,39 +142,33 @@ function LandingHeader() {
       const lastSection = sectionsBelow.reduce((prev, curr) =>
         curr.top > prev.top ? curr : prev
       );
-      setActiveNav((prev) =>
-        prev !== lastSection.href ? lastSection.href : prev
-      );
+      setActiveNav(lastSection.href);
     }
   });
 
   const handleNavClick = useCallback(
     (href: string, e?: React.MouseEvent<HTMLAnchorElement>) => {
       e?.preventDefault();
-      
-      // [FIX QUAN TRỌNG]: Clear timeout cũ nếu có để tránh conflict
+
+      // Clear previous timeout
       if (clickingTimeoutRef.current) {
         clearTimeout(clickingTimeoutRef.current);
         clickingTimeoutRef.current = null;
       }
 
-      // Set activeNav ngay lập tức để UI phản hồi ngay
       setActiveNav(href);
-
-      // [FIX QUAN TRỌNG]: Bật cờ báo hiệu đang click
       isClickingRef.current = true;
+      setIsMenuOpen(false);
 
       if (href.startsWith("#")) {
         const element = document.querySelector(href);
         if (element) {
           sectionsCacheRef.current.set(href, element);
           element.scrollIntoView({ behavior: "smooth" });
-
-          // [FIX QUAN TRỌNG]: Tắt cờ sau 1.5 giây (đủ để scroll xong và ổn định)
           clickingTimeoutRef.current = setTimeout(() => {
             isClickingRef.current = false;
             clickingTimeoutRef.current = null;
-          }, 1500);
+          }, CLICK_TIMEOUT);
         } else {
           isClickingRef.current = false;
         }
@@ -188,7 +176,6 @@ function LandingHeader() {
         navigate(href);
         isClickingRef.current = false;
       }
-      setIsMenuOpen(false);
     },
     [navigate]
   );
@@ -215,15 +202,11 @@ function LandingHeader() {
   // Sync scroll position on mount to prevent flash
   useEffect(() => {
     const checkScrollPosition = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
     };
 
-    // Check immediately
     checkScrollPosition();
-
-    // Also check after a short delay to ensure DOM is ready
     const timeoutId = setTimeout(checkScrollPosition, 100);
-
     return () => clearTimeout(timeoutId);
   }, []);
 
@@ -281,9 +264,8 @@ function LandingHeader() {
       }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      {/* --- LIQUID GLASS BACKGROUND BLobs --- */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
-        {/* Blob 1: Dark Blue chủ đạo */}
+      {/* Background Blobs */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <motion.div
           className="absolute top-[-20%] left-[-10%] w-[400px] h-[400px] bg-[var(--color-dark-blue)]/20 rounded-full mix-blend-multiply filter blur-[80px]"
           animate={{
@@ -297,8 +279,6 @@ function LandingHeader() {
             ease: "easeInOut",
           }}
         />
-
-        {/* Blob 2: Light Blue điểm nhấn */}
         <motion.div
           className="absolute top-[10%] right-[-10%] w-[350px] h-[350px] bg-[var(--color-light-blue)]/25 rounded-full mix-blend-multiply filter blur-[80px]"
           animate={{
@@ -313,8 +293,6 @@ function LandingHeader() {
             delay: 1,
           }}
         />
-
-        {/* Blob 3: Dark Blue nhạt để cân bằng */}
         <motion.div
           className="absolute bottom-[-30%] left-[30%] w-[450px] h-[450px] bg-[var(--color-dark-blue)]/15 rounded-full mix-blend-multiply filter blur-[90px]"
           animate={{
@@ -331,17 +309,17 @@ function LandingHeader() {
         />
       </div>
 
-      {/* --- NOISE TEXTURE (Optional) --- */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      {/* Noise Texture */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-      {/* --- GLASS OVERLAY --- */}
+      {/* Glass Overlay */}
       <motion.div
         className="absolute inset-0 w-full h-full border-b border-white/50"
         initial={false}
         animate={{
           backgroundColor: isScrolled
-            ? "rgba(255, 255, 255, 0.7)"
-            : "rgba(255, 255, 255, 0.4)",
+            ? "rgba(255, 255, 255, 0.75)"
+            : "rgba(255, 255, 255, 0.5)",
           backdropFilter: isScrolled ? "blur(12px)" : "blur(8px)",
           boxShadow: isScrolled
             ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
@@ -350,15 +328,9 @@ function LandingHeader() {
         transition={{ duration: 0.3, ease: "easeInOut" }}
       />
 
-      {/* --- CONTENT (Relative để hiển thị trên glass) --- */}
+      {/* Content */}
       <nav className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-        <motion.div
-          className="flex justify-between items-center h-full"
-          animate={{
-            height: isScrolled ? "100%" : "100%",
-          }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-        >
+        <div className="flex justify-between items-center h-full">
           {/* Logo */}
           <motion.div
             onClick={handleScrollToTop}
@@ -471,37 +443,32 @@ function LandingHeader() {
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMenuOpen}
             >
-              <span className="sr-only">
-                {isMenuOpen ? "Close" : "Open"} main menu
-              </span>
-              <motion.svg
-                className="block h-6 w-6 text-[var(--color-dark-blue)]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-                animate={{ rotate: isMenuOpen ? 90 : 0 }}
-                transition={{ duration: ANIMATION_DURATION }}
-              >
+              <AnimatePresence mode="wait">
                 {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: ANIMATION_DURATION }}
+                  >
+                    <X className="h-6 w-6" />
+                  </motion.div>
                 ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: ANIMATION_DURATION }}
+                  >
+                    <Menu className="h-6 w-6" />
+                  </motion.div>
                 )}
-              </motion.svg>
+              </AnimatePresence>
             </Button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Mobile menu with AnimatePresence */}
         <AnimatePresence>

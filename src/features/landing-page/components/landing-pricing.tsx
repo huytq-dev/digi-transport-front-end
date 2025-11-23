@@ -2,12 +2,13 @@ import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Check, Sparkles, Zap, Building2 } from 'lucide-react';
+import { Check, Sparkles, Zap, Building2, Wallet, Smartphone, Clock, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { AnimatedText } from '@/components/animated-text';
+import { SmoothWrapper } from '@/components/smooth-wrapper';
 
 interface PricingPlan {
   id: string;
@@ -73,9 +74,9 @@ function LandingPricing() {
   }, [navigate]);
 
   return (
-    <section id="pricing" className="relative py-20 md:py-32 overflow-hidden" aria-label="Pricing plans">
+    <section id="pricing" className="relative py-20 md:py-32 overflow-hidden bg-white" aria-label="Pricing plans">
       {/* Background */}
-      <div className="absolute inset-0 bg-[var(--color-cream)]/30 -z-20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-cream)]/20 via-white to-white -z-20" />
       
       {/* Decorative blobs */}
       <div
@@ -97,7 +98,9 @@ function LandingPricing() {
           className="text-center mb-16 max-w-3xl mx-auto"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-[var(--color-dark-blue)] tracking-tight">
-            <AnimatedText>{t('pricing.title')}</AnimatedText>
+            <SmoothWrapper className="inline-block">
+              <AnimatedText>{t('pricing.title')}</AnimatedText>
+            </SmoothWrapper>
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
             <AnimatedText>{t('pricing.subtitle')}</AnimatedText>
@@ -162,7 +165,9 @@ function LandingPricing() {
                     </div>
 
                     <h3 className="text-2xl font-bold text-[var(--color-dark-blue)]">
-                      <AnimatedText>{t(plan.nameKey)}</AnimatedText>
+                      <SmoothWrapper className="inline-block">
+                        <AnimatedText>{t(plan.nameKey)}</AnimatedText>
+                      </SmoothWrapper>
                     </h3>
                     <p className="text-gray-500 text-sm mt-2 min-h-[40px]">
                       <AnimatedText>{t(plan.descriptionKey)}</AnimatedText>
@@ -182,7 +187,7 @@ function LandingPricing() {
                       </span>
                       {plan.periodKey && (
                         <span className="text-gray-500 ml-2 font-medium">
-                          / <AnimatedText>{t(plan.periodKey)}</AnimatedText>
+                          <AnimatedText>{t(plan.periodKey)}</AnimatedText>
                         </span>
                       )}
                     </div>
@@ -232,12 +237,91 @@ function LandingPricing() {
           })}
         </div>
 
+        {/* Driver Recruitment Compact Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-20"
+        >
+          <Card className="bg-gradient-to-br from-[var(--color-dark-blue)]/5 to-[var(--color-light-blue)]/10 border-[var(--color-light-blue)]/30 overflow-hidden">
+            <CardContent className="p-8 md:p-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      "inline-flex items-center gap-2 px-3 py-1 text-sm font-semibold mb-4",
+                      "bg-white border-[var(--color-light-blue)]/30 text-[var(--color-dark-blue)]"
+                    )}
+                  >
+                    {t('header.forPartners') || 'Dành cho Đối tác & Tài xế'}
+                  </Badge>
+                  <h3 className="text-2xl md:text-3xl font-bold text-[var(--color-dark-blue)] mb-4">
+                    <AnimatedText>{t('driverRecruitment.title')}</AnimatedText>
+                  </h3>
+                  <p className="text-gray-700 mb-6 leading-relaxed">
+                    <AnimatedText>{t('driverRecruitment.subtitle')}</AnimatedText>
+                  </p>
+                  <div className="flex flex-wrap gap-3 mb-4">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Wallet className="h-4 w-4 text-[var(--color-dark-blue)]" />
+                      <span>{t('driverRecruitment.benefits.revenue.title')}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Smartphone className="h-4 w-4 text-[var(--color-dark-blue)]" />
+                      <span>{t('driverRecruitment.benefits.management.title')}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Clock className="h-4 w-4 text-[var(--color-dark-blue)]" />
+                      <span>{t('driverRecruitment.benefits.flexible.title')}</span>
+                    </div>
+                  </div>
+                  <Button
+                    onClick={() => navigate('/register?type=driver')}
+                    size="lg"
+                    className="bg-[var(--color-dark-blue)] hover:bg-[rgba(74,112,169,0.9)] text-white rounded-xl"
+                  >
+                    <AnimatedText>{t('driverRecruitment.cta')}</AnimatedText>
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  {[
+                    { icon: Wallet, key: 'revenue' },
+                    { icon: Smartphone, key: 'management' },
+                    { icon: Clock, key: 'flexible' },
+                  ].map((item, index) => {
+                    const Icon = item.icon;
+                    return (
+                      <motion.div
+                        key={item.key}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                        className="bg-white/80 backdrop-blur-sm rounded-xl p-4 text-center border border-white/50 shadow-sm hover:shadow-md transition-all"
+                      >
+                        <Icon className="h-6 w-6 text-[var(--color-dark-blue)] mx-auto mb-2" />
+                        <p className="text-xs font-medium text-gray-700">
+                          {t(`driverRecruitment.benefits.${item.key}.title`)}
+                        </p>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
         {/* Footer Note */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-16 text-center"
         >
           <p className="text-gray-500 text-sm bg-white/50 inline-block px-6 py-3 rounded-full border border-white/50 backdrop-blur-sm">
