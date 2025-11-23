@@ -177,3 +177,7 @@ yarn-error.log*
 *.key
 *.cert
 *.crt
+
+# Documentation
+DEVELOPMENT_GUIDE.md
+MOBILE_OPTIMIZATION.md
