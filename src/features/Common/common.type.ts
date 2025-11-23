@@ -73,3 +73,17 @@ export function getApiErrorMessage<T>(response: ApiResponse<T>): string {
   
   return response.Title || 'Unknown error';
 }
+
+export type ApiReponseSuccess<T> = ApiResponse<T> & { Data: T };
+
+export type RoleName = 'ADMIN' | 'USER' | 'DRIVER';
+
+export interface UserDomainModel {
+  userId: string;
+  name: string;
+  email: string;
+  roleId: string;
+  roleName: RoleName;
+  createdAt?: string;
+  updatedAt?: string;
+}
