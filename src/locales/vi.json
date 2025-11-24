@@ -431,5 +431,45 @@
       "backToSignIn": "Quay lại đăng nhập",
       "resendEmail": "Đăng ký lại"
     }
+  },
+  "header": {
+    "userMenu": {
+      "yourRides": "Chuyến đi của bạn",
+      "inbox": "Hộp thư",
+      "profile": "Hồ sơ",
+      "transfers": "Chuyển khoản",
+      "paymentsRefunds": "Thanh toán & Hoàn tiền",
+      "logout": "Đăng xuất"
+    }
+  },
+  "userHome": {
+    "hero": {
+      "title": "Vi vu muôn nơi, ghép xe cực lời!",
+      "subtitle": "Kết nối hành khách và tài xế chuyên nghiệp cho những chuyến đi liên tỉnh an toàn, tiết kiệm.",
+      "fromPlaceholder": "Điểm đón (VD: Hà Nội)",
+      "toPlaceholder": "Điểm đến (VD: Hạ Long)",
+      "datePlaceholder": "Hôm nay",
+      "searchButton": "Tìm chuyến"
+    },
+    "popularRoutes": {
+      "title": "Tuyến đường phổ biến",
+      "subtitle": "Các chuyến đi được nhiều người lựa chọn nhất tuần qua.",
+      "viewAll": "Xem tất cả",
+      "driversAvailable": "tài xế đang chạy"
+    },
+    "whyChooseUs": {
+      "safety": {
+        "title": "An toàn tuyệt đối",
+        "description": "Tài xế được xác thực danh tính, lộ trình được theo dõi GPS."
+      },
+      "savings": {
+        "title": "Tiết kiệm chi phí",
+        "description": "Rẻ hơn 30% so với taxi truyền thống nhờ mô hình đi ghép."
+      },
+      "speed": {
+        "title": "Đặt xe siêu tốc",
+        "description": "Chỉ 30 giây để tìm được chuyến xe phù hợp với bạn."
+      }
+    }
   }
 }

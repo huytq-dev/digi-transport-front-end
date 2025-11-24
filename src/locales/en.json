@@ -431,5 +431,45 @@
       "backToSignIn": "Back to sign in",
       "resendEmail": "Sign up again"
     }
+  },
+  "header": {
+    "userMenu": {
+      "yourRides": "Your rides",
+      "inbox": "Inbox",
+      "profile": "Profile",
+      "transfers": "Transfers",
+      "paymentsRefunds": "Payments & refunds",
+      "logout": "Logout"
+    }
+  },
+  "userHome": {
+    "hero": {
+      "title": "Travel everywhere, carpool smart!",
+      "subtitle": "Connect passengers and professional drivers for safe and affordable inter-provincial trips.",
+      "fromPlaceholder": "Pickup point (e.g., Hanoi)",
+      "toPlaceholder": "Destination (e.g., Ha Long)",
+      "datePlaceholder": "Today",
+      "searchButton": "Find Trip"
+    },
+    "popularRoutes": {
+      "title": "Popular Routes",
+      "subtitle": "The most chosen trips this week.",
+      "viewAll": "View All",
+      "driversAvailable": "drivers running"
+    },
+    "whyChooseUs": {
+      "safety": {
+        "title": "Absolute Safety",
+        "description": "Drivers are identity-verified, routes are GPS-tracked."
+      },
+      "savings": {
+        "title": "Cost Savings",
+        "description": "30% cheaper than traditional taxis thanks to carpooling model."
+      },
+      "speed": {
+        "title": "Super Fast Booking",
+        "description": "Just 30 seconds to find the perfect trip for you."
+      }
+    }
   }
 }
