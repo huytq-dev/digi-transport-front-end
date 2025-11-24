@@ -433,6 +433,11 @@
     }
   },
   "header": {
+    "navigation": {
+      "home": "Home",
+      "bookings": "Bookings",
+      "trips": "Trips"
+    },
     "userMenu": {
       "yourRides": "Your rides",
       "inbox": "Inbox",
@@ -440,7 +445,9 @@
       "transfers": "Transfers",
       "paymentsRefunds": "Payments & refunds",
       "logout": "Logout"
-    }
+    },
+    "member": "Member",
+    "signOutSuccess": "Signed out successfully"
   },
   "userHome": {
     "hero": {
@@ -456,6 +463,13 @@
       "subtitle": "The most chosen trips this week.",
       "viewAll": "View All",
       "driversAvailable": "drivers running"
+    },
+    "becomeDriver": {
+      "title": "Have an empty car?",
+      "titleHighlight": "Share your journey now!",
+      "description": "Join a community of over 5,000 DigiTransport drivers. Help you reduce fuel costs, tolls and have more interesting travel companions.",
+      "registerButton": "Register as Driver",
+      "benefitsButton": "View Benefits"
     },
     "whyChooseUs": {
       "safety": {

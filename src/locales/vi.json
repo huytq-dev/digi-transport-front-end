@@ -433,6 +433,11 @@
     }
   },
   "header": {
+    "navigation": {
+      "home": "Trang chủ",
+      "bookings": "Đặt chỗ",
+      "trips": "Chuyến đi"
+    },
     "userMenu": {
       "yourRides": "Chuyến đi của bạn",
       "inbox": "Hộp thư",
@@ -440,7 +445,9 @@
       "transfers": "Chuyển khoản",
       "paymentsRefunds": "Thanh toán & Hoàn tiền",
       "logout": "Đăng xuất"
-    }
+    },
+    "member": "Thành viên",
+    "signOutSuccess": "Đăng xuất thành công"
   },
   "userHome": {
     "hero": {
@@ -456,6 +463,13 @@
       "subtitle": "Các chuyến đi được nhiều người lựa chọn nhất tuần qua.",
       "viewAll": "Xem tất cả",
       "driversAvailable": "tài xế đang chạy"
+    },
+    "becomeDriver": {
+      "title": "Bạn có xe trống?",
+      "titleHighlight": "Chia sẻ hành trình ngay!",
+      "description": "Gia nhập cộng đồng hơn 5.000 tài xế DigiTransport. Giúp bạn giảm chi phí xăng xe, cầu đường và có thêm bạn đồng hành thú vị.",
+      "registerButton": "Đăng ký làm Tài xế",
+      "benefitsButton": "Xem quyền lợi"
     },
     "whyChooseUs": {
       "safety": {

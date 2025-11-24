@@ -50,9 +50,9 @@ const ANIMATION_DURATION = 0.2;
 
 // Định nghĩa Menu Items
 const NAV_ITEMS = [
-  { key: 'home', label: 'Trang chủ', href: '/home', icon: Home },
-  { key: 'bookings', label: 'Đặt chỗ', href: '/home/bookings', icon: Calendar },
-  { key: 'trips', label: 'Chuyến đi', href: '/home/trips', icon: MapPin },
+  { key: 'home', translationKey: 'header.navigation.home', href: '/home', icon: Home },
+  { key: 'bookings', translationKey: 'header.navigation.bookings', href: '/home/bookings', icon: Calendar },
+  { key: 'trips', translationKey: 'header.navigation.trips', href: '/home/trips', icon: MapPin },
 ];
 
 export const HomeHeader = memo(function HomeHeader() {
@@ -98,7 +98,7 @@ export const HomeHeader = memo(function HomeHeader() {
     try {
       await signOut({ UserId: user.userId }).unwrap();
       authService.clearAuthData();
-      toast.success('Đăng xuất thành công');
+      toast.success(t('header.signOutSuccess'));
       navigate('/auth/sign-in');
     } catch (error: any) {
       authService.clearAuthData();
@@ -253,7 +253,7 @@ export const HomeHeader = memo(function HomeHeader() {
                   {/* Label và Icon */}
                   <span className="relative z-10 flex items-center gap-2">
                     <item.icon className={cn('w-4 h-4', isActive ? 'fill-current' : '')} />
-                    <AnimatedText>{item.label}</AnimatedText>
+                    <AnimatedText>{t(item.translationKey)}</AnimatedText>
                   </span>
                 </Link>
               );
@@ -300,7 +300,9 @@ export const HomeHeader = memo(function HomeHeader() {
                       <span className="text-xs font-bold text-[var(--color-dark-blue)] leading-tight truncate max-w-[120px]">
                         {user?.name || 'User'}
                       </span>
-                      <span className="text-[10px] text-[var(--color-dark-blue)]/60 leading-tight">Thành viên</span>
+                      <span className="text-[10px] text-[var(--color-dark-blue)]/60 leading-tight">
+                        <AnimatedText>{t('header.member')}</AnimatedText>
+                      </span>
                     </div>
                     <ChevronDown className="h-3.5 w-3.5 text-[var(--color-dark-blue)]/60 flex-shrink-0 hidden sm:block" />
                   </div>
@@ -501,7 +503,7 @@ export const HomeHeader = memo(function HomeHeader() {
                         {/* Label và Icon */}
                         <span className="relative z-10 flex items-center gap-3">
                           <item.icon className="h-5 w-5" />
-                          <AnimatedText>{item.label}</AnimatedText>
+                          <AnimatedText>{t(item.translationKey)}</AnimatedText>
                         </span>
                       </Link>
                     </motion.div>
@@ -518,7 +520,7 @@ export const HomeHeader = memo(function HomeHeader() {
                   >
                     <div className="flex items-center gap-3">
                       <User className="h-5 w-5" />
-                      <AnimatedText>Hồ sơ</AnimatedText>
+                      <AnimatedText>{t('header.userMenu.profile')}</AnimatedText>
                     </div>
                   </Link>
                   <button
@@ -527,7 +529,7 @@ export const HomeHeader = memo(function HomeHeader() {
                   >
                     <div className="flex items-center gap-3">
                       <LogOut className="h-5 w-5" />
-                      <AnimatedText>Đăng xuất</AnimatedText>
+                      <AnimatedText>{t('header.userMenu.logout')}</AnimatedText>
                     </div>
                   </button>
                 </div>
