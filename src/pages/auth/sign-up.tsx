@@ -1,12 +1,9 @@
 import { AuthLayout } from "@/components/auth/auth-layout";
 import { SignUpForm } from "@/features/auth/components/sign-up-form";
 import { motion } from "framer-motion";
-import { AnimatedText } from "@/components/animated-text";
-import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
 export default function SignUpPage() {
-  const { t } = useTranslation();
 
   return (
     <AuthLayout>
@@ -26,22 +23,7 @@ export default function SignUpPage() {
           bounce: 0.2,
         }}
       >
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[var(--color-dark-blue)] mb-2">
-            <AnimatedText>
-              {t("auth.signUp.title") || "Đăng ký tài khoản"}
-            </AnimatedText>
-          </h1>
-          <p className="text-gray-600 text-sm">
-            <AnimatedText>
-              {t("auth.signUp.subtitle") ||
-                "Tạo tài khoản để bắt đầu hành trình của bạn"}
-            </AnimatedText>
-          </p>
-        </div>
-
-        {/* Form */}
+        {/* Form - Header đã được di chuyển vào trong SignUpForm */}
         <SignUpForm />
       </motion.div>
     </AuthLayout>

@@ -63,11 +63,42 @@ export function ForgotPasswordForm() {
         );
       }
     } catch (error: unknown) {
-      const errorMessage =
-        error && typeof error === "object" && "data" in error
-          ? getApiErrorMessage(error.data as any)
-          : t("auth.forgotPassword.errorMessage") ||
-            "Có lỗi xảy ra. Vui lòng thử lại sau.";
+      // Log error vào console để debug (chỉ trong console)
+      // Log error vào console để debug (chỉ trong development)
+      if (import.meta.env.DEV || import.meta.env.MODE === "development") {
+        console.log('=== FORGOT PASSWORD API ERROR ===');
+        // Không log full error để tránh leak thông tin nhạy cảm
+        if (error && typeof error === "object" && "status" in error) {
+          console.log('Error Status:', (error as any).status);
+        }
+        console.log('===================================');
+      }
+
+      let errorMessage = t("auth.forgotPassword.errorMessage") || "Có lỗi xảy ra. Vui lòng thử lại sau.";
+
+      // Handle RTK Query error format và lấy message thân thiện
+      if (error && typeof error === "object") {
+        if ("data" in error && error.data) {
+          errorMessage = getApiErrorMessage(error.data as any);
+        } else if ("error" in error && error.error) {
+          if (typeof error.error === "string") {
+            errorMessage = error.error;
+          } else if (typeof error.error === "object" && "data" in error.error) {
+            errorMessage = getApiErrorMessage(error.error.data as any);
+          }
+        } else if ("status" in error) {
+          const status = (error as any).status;
+          if (status === 500) {
+            errorMessage = t("auth.forgotPassword.errorMessage") || "Lỗi hệ thống. Vui lòng thử lại sau.";
+          } else if (status === 400) {
+            errorMessage = "Địa chỉ email không hợp lệ. Vui lòng kiểm tra lại.";
+          } else if (status === 404) {
+            errorMessage = "Không tìm thấy email. Vui lòng kiểm tra lại địa chỉ email.";
+          } else if (status >= 500) {
+            errorMessage = t("auth.forgotPassword.errorMessage") || "Lỗi hệ thống. Vui lòng thử lại sau.";
+          }
+        }
+      }
 
       toast.error(
         t("auth.forgotPassword.errorTitle") || "Gửi email thất bại",
@@ -84,31 +115,32 @@ export function ForgotPasswordForm() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: "spring", duration: 0.5 }}
-        className="flex flex-col items-center justify-center py-8"
+        className="flex flex-col items-center justify-center py-8 w-full"
       >
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
+          className="mb-6"
         >
-          <CheckCircle2 className="w-20 h-20 text-green-500 mb-6 mx-auto drop-shadow-lg" />
+          <CheckCircle2 className="w-20 h-20 text-green-500 mx-auto drop-shadow-lg" />
         </motion.div>
-        <h3 className="text-2xl font-bold text-[var(--color-dark-blue)] mb-3 text-center">
+        <h3 className="text-2xl font-bold text-[var(--color-dark-blue)] mb-3 text-center w-full">
           <AnimatedText>
             {t("auth.forgotPassword.successTitle") || "Email đã được gửi!"}
           </AnimatedText>
         </h3>
-        <p className="text-gray-600 text-center mb-6 max-w-sm mx-auto leading-relaxed">
+        <p className="text-gray-600 text-center mb-8 max-w-sm mx-auto leading-relaxed px-2">
           <AnimatedText>
             {t("auth.forgotPassword.successMessage") ||
               "Vui lòng kiểm tra email của bạn. Chúng tôi đã gửi link đặt lại mật khẩu đến địa chỉ email bạn đã cung cấp."}
           </AnimatedText>
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 w-full">
+        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mx-auto">
           <Button
             onClick={() => navigate("/auth/sign-in")}
             variant="outline"
-            className="w-full sm:w-auto"
+            className="w-full sm:flex-1"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             <AnimatedText>
@@ -119,7 +151,7 @@ export function ForgotPasswordForm() {
             onClick={() => {
               setIsSuccess(false);
             }}
-            className="w-full sm:w-auto bg-[var(--color-dark-blue)] text-white"
+            className="w-full sm:flex-1 bg-[var(--color-dark-blue)] text-white"
           >
             <AnimatedText>
               {t("auth.forgotPassword.resendEmail") || "Gửi lại email"}
@@ -134,14 +166,29 @@ export function ForgotPasswordForm() {
     <motion.form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="space-y-4"
+      className="space-y-5 w-full"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
+      {/* Header - Chỉ hiển thị khi đang nhập liệu */}
+      <motion.div variants={itemVariants} className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-[var(--color-dark-blue)] mb-3 tracking-tight">
+          <AnimatedText>
+            {t("auth.forgotPassword.title") || "Quên mật khẩu"}
+          </AnimatedText>
+        </h1>
+        <p className="text-gray-600 text-sm leading-relaxed">
+          <AnimatedText>
+            {t("auth.forgotPassword.subtitle") ||
+              "Đặt lại mật khẩu của bạn"}
+          </AnimatedText>
+        </p>
+      </motion.div>
+
       {/* Description */}
       <motion.div className="mb-6" variants={itemVariants}>
-        <p className="text-sm text-gray-600 text-center leading-relaxed">
+        <p className="text-sm text-gray-600 text-center leading-relaxed px-2">
           <AnimatedText>
             {t("auth.forgotPassword.description") ||
               "Nhập email của bạn và chúng tôi sẽ gửi link đặt lại mật khẩu cho bạn."}
@@ -167,7 +214,7 @@ export function ForgotPasswordForm() {
       </motion.div>
 
       {/* Submit Button */}
-      <motion.div variants={itemVariants} className="pt-2">
+      <motion.div variants={itemVariants} className="pt-4">
         <SubmitButton
           isLoading={isLoading}
           loadingText={t("auth.forgotPassword.submitting") || "Đang gửi..."}
@@ -178,10 +225,10 @@ export function ForgotPasswordForm() {
       </motion.div>
 
       {/* Back to Sign In Link */}
-      <motion.div className="text-center pt-4" variants={itemVariants}>
+      <motion.div className="text-center pt-6" variants={itemVariants}>
         <Link
           to="/auth/sign-in"
-          className="text-sm text-[var(--color-dark-blue)] hover:underline font-medium inline-flex items-center gap-1"
+          className="animated-underline text-sm text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 font-medium inline-flex items-center gap-2 transition-colors duration-200"
         >
           <ArrowLeft className="w-4 h-4" />
           <AnimatedText>

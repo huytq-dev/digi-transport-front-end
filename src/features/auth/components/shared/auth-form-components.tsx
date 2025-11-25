@@ -190,14 +190,37 @@ export function PasswordField({
             type="button"
             onClick={togglePassword}
             className={cn(
-              "absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-gray-100 transition-colors",
+              "absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-gray-100 transition-colors z-10",
               hasError
                 ? "text-red-500"
                 : "text-gray-400 hover:text-[var(--color-dark-blue)]"
             )}
             tabIndex={-1}
+            aria-label={showPassword ? "Hide password" : "Show password"}
           >
-            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            <AnimatePresence mode="wait" initial={false}>
+              {showPassword ? (
+                <motion.div
+                  key="eye-off"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <EyeOff className="w-5 h-5" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="eye"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <Eye className="w-5 h-5" />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </button>
         )}
       </IconField>
@@ -271,9 +294,10 @@ interface SubmitButtonProps {
   loadingText: string;
   submitText: string;
   disabled?: boolean;
+  className?: string;
 }
 
-export function SubmitButton({ isLoading, loadingText, submitText, disabled }: SubmitButtonProps) {
+export function SubmitButton({ isLoading, loadingText, submitText, disabled, className }: SubmitButtonProps) {
   return (
     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
       <Button
@@ -282,7 +306,8 @@ export function SubmitButton({ isLoading, loadingText, submitText, disabled }: S
         className={cn(
           "w-full h-12 rounded-xl font-bold text-base shadow-lg relative overflow-hidden group",
           "bg-[var(--color-dark-blue)] text-white",
-          "disabled:opacity-70 disabled:cursor-not-allowed"
+          "disabled:opacity-70 disabled:cursor-not-allowed",
+          className
         )}
       >
         {/* Gradient Shine Effect */}
