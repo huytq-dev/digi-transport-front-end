@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,7 @@ import { AnimatedText } from "@/components/animated-text";
 import { signUpSchema, type SignUpFormData } from "../auth.schema";
 import { useSignUpMutation } from "../auth.slice";
 import { isApiResponseSuccess, getApiErrorMessage } from "@/features/Common/common.type";
+import type { ApiResponse } from "@/features/Common/common.type";
 import {
   containerVariants,
   itemVariants,
@@ -23,6 +24,53 @@ import {
   SocialLoginButtons,
   Divider,
 } from "./shared/auth-form-components";
+
+// Constants
+const REDIRECT_DELAY_MS = 3000; // Delay trước khi chuyển trang
+
+// Password strength thresholds (sync với schema requirement)
+const PASSWORD_STRENGTH_THRESHOLDS = [6, 8, 10, 12] as const;
+
+// Helper function để log (chỉ trong development)
+const logDev = (message: string, data?: unknown) => {
+  if (import.meta.env.DEV || import.meta.env.MODE === "development") {
+    console.log(`[SignUp] ${message}`, data ? JSON.stringify(data, null, 2) : "");
+  }
+};
+
+// Helper function để extract error message từ RTK Query error
+const extractErrorMessage = (error: unknown, t: (key: string) => string): string => {
+  // Ưu tiên sử dụng getApiErrorMessage từ common.type
+  if (error && typeof error === "object") {
+    // RTK Query error format: { data: ApiResponse, status: number }
+    if ("data" in error && error.data) {
+      const errorMsg = getApiErrorMessage(error.data as ApiResponse);
+      if (errorMsg && errorMsg !== "Có lỗi xảy ra. Vui lòng thử lại sau.") {
+        return errorMsg;
+      }
+    }
+
+    // Fallback cho các HTTP status cụ thể nếu helper chưa bao phủ đầy đủ
+    if ("status" in error) {
+      const status = (error as { status: number }).status;
+      switch (status) {
+        case 400:
+          return "Thông tin không hợp lệ. Vui lòng kiểm tra lại.";
+        case 409:
+          // Security: Generic message để tránh email enumeration attack
+          return "Thông tin đã tồn tại. Vui lòng kiểm tra lại.";
+        case 500:
+          return t("auth.signUp.errorMessage") || "Lỗi hệ thống. Vui lòng thử lại sau.";
+        default:
+          if (status >= 500) {
+            return t("auth.signUp.errorMessage") || "Lỗi hệ thống. Vui lòng thử lại sau.";
+          }
+      }
+    }
+  }
+
+  return t("auth.signUp.errorMessage") || "Có lỗi xảy ra. Vui lòng thử lại sau.";
+};
 
 export function SignUpForm() {
   const { t } = useTranslation();
@@ -38,7 +86,6 @@ export function SignUpForm() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     watch,
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -53,72 +100,104 @@ export function SignUpForm() {
 
   const passwordValue = watch("Password");
 
+  // Tối ưu: Giảm delay và bỏ reset() vì component sẽ unmount
   useEffect(() => {
     if (isSuccess) {
       const timer = setTimeout(() => {
-        setIsSuccess(false);
-        reset();
         navigate("/auth/sign-in");
-      }, 3000);
+        // Không cần setIsSuccess(false) và reset() vì component sẽ unmount
+      }, REDIRECT_DELAY_MS);
       return () => clearTimeout(timer);
     }
-  }, [isSuccess, reset, navigate]);
+  }, [isSuccess, navigate]);
 
-  const onSubmit = async (data: SignUpFormData) => {
-    try {
-      const { PasswordConfirm, TermsAccepted, ...submitData } = data;
-      const response = await signUp(submitData).unwrap();
+  // Tối ưu: Sử dụng useCallback để memoize handler
+  const onSubmit = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        const { PasswordConfirm, TermsAccepted, ...submitData } = data;
 
-      if (isApiResponseSuccess(response)) {
-        setIsSuccess(true);
-        toast.success(t("auth.signUp.successTitle") || "Đăng ký thành công!", {
-          description:
-            t("auth.signUp.successMessage") ||
-            "Vui lòng kiểm tra email để xác nhận tài khoản.",
-        });
-      } else {
-        const errorMessage = getApiErrorMessage(response);
+        logDev("Submitting sign up request", submitData);
+
+        const response = await signUp(submitData).unwrap();
+
+        logDev("Sign up API response", response);
+
+        if (isApiResponseSuccess(response)) {
+          setIsSuccess(true);
+          toast.success(t("auth.signUp.successTitle") || "Đăng ký thành công!", {
+            description:
+              t("auth.signUp.successMessage") ||
+              "Vui lòng kiểm tra email để xác nhận tài khoản.",
+          });
+        } else {
+          // Xử lý trường hợp response không success nhưng không throw error
+          const errorMessage = getApiErrorMessage(response);
+          toast.error(t("auth.signUp.errorTitle") || "Đăng ký thất bại", {
+            description: errorMessage,
+          });
+        }
+      } catch (error: unknown) {
+        logDev("Sign up API error", error);
+
+        // Rút gọn: Sử dụng helper function để extract error message
+        const errorMessage = extractErrorMessage(error, t);
+
         toast.error(t("auth.signUp.errorTitle") || "Đăng ký thất bại", {
           description: errorMessage,
         });
       }
-    } catch (error: unknown) {
-      const errorMessage =
-        error && typeof error === "object" && "data" in error
-          ? getApiErrorMessage(error.data as any)
-          : t("auth.signUp.errorMessage") || "Có lỗi xảy ra. Vui lòng thử lại sau.";
+    },
+    [signUp, t]
+  );
 
-      toast.error(t("auth.signUp.errorTitle") || "Đăng ký thất bại", {
-        description: errorMessage,
-      });
-    }
-  };
-
-  const getStrengthColor = (index: number, length: number) => {
-    // Logic đơn giản hóa cho ngắn gọn
-    if (index === 0) return length >= 6 ? "bg-green-500" : "bg-red-500";
-    if (index === 1) return length >= 8 ? "bg-green-500" : "bg-gray-200";
-    if (index === 2) return length >= 10 ? "bg-green-500" : "bg-gray-200";
-    if (index === 3) return length >= 12 ? "bg-green-500" : "bg-gray-200";
-    return "bg-gray-200";
-  };
+  // Tối ưu: Password strength indicator sync với schema
+  const getStrengthColor = useCallback(
+    (index: number, length: number) => {
+      const threshold = PASSWORD_STRENGTH_THRESHOLDS[index];
+      if (threshold === undefined) return "bg-gray-200";
+      return length >= threshold ? "bg-green-500" : index === 0 ? "bg-red-500" : "bg-gray-200";
+    },
+    []
+  );
 
   if (isSuccess) {
     return (
-      <div className="flex flex-col items-center justify-center py-12">
-        <CheckCircle2 className="w-16 h-16 text-green-500 mb-4" />
-        <h3 className="text-xl font-bold">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: "spring", duration: 0.5 }}
+        className="flex flex-col items-center justify-center py-12"
+      >
+        <motion.div
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
+        >
+          <CheckCircle2 className="w-20 h-20 text-green-500 mb-6 mx-auto drop-shadow-lg" />
+        </motion.div>
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-2xl font-bold text-[var(--color-dark-blue)] mb-3 text-center"
+        >
           <AnimatedText>
             {t("auth.signUp.successTitle") || "Đăng ký thành công!"}
           </AnimatedText>
-        </h3>
-        <p className="text-sm text-gray-600 mt-2">
+        </motion.h3>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-sm text-gray-600 text-center max-w-sm mx-auto leading-relaxed"
+        >
           <AnimatedText>
             {t("auth.signUp.successMessage") ||
               "Vui lòng kiểm tra email để xác nhận tài khoản."}
           </AnimatedText>
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     );
   }
 
@@ -131,6 +210,21 @@ export function SignUpForm() {
       initial="hidden"
       animate="visible"
     >
+      {/* Header - Chỉ hiển thị khi đang nhập liệu */}
+      <motion.div variants={itemVariants} className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-[var(--color-dark-blue)] mb-2">
+          <AnimatedText>
+            {t("auth.signUp.title") || "Đăng ký tài khoản"}
+          </AnimatedText>
+        </h1>
+        <p className="text-gray-600 text-sm">
+          <AnimatedText>
+            {t("auth.signUp.subtitle") ||
+              "Tạo tài khoản để bắt đầu hành trình của bạn"}
+          </AnimatedText>
+        </p>
+      </motion.div>
+
       {/* Name Field */}
       <motion.div variants={itemVariants}>
         <TextField
@@ -185,7 +279,7 @@ export function SignUpForm() {
               exit={{ opacity: 0, height: 0 }}
               className="flex gap-1 h-1 mt-2"
             >
-              {[0, 1, 2, 3].map((index) => (
+              {PASSWORD_STRENGTH_THRESHOLDS.map((_, index) => (
                 <div
                   key={index}
                   className={cn(
@@ -311,7 +405,7 @@ export function SignUpForm() {
           </AnimatedText>{" "}
           <Link
             to="/auth/sign-in"
-            className="text-[var(--color-dark-blue)] font-bold hover:underline decoration-2 underline-offset-4 transition-all"
+            className="animated-underline text-[var(--color-dark-blue)] font-bold hover:text-[var(--color-dark-blue)]/80 transition-colors duration-200"
           >
             <AnimatedText>
               {t("auth.signUp.signInLink") || "Đăng nhập"}

@@ -91,11 +91,42 @@ export function ResetPasswordForm() {
         );
       }
     } catch (error: unknown) {
-      const errorMessage =
-        error && typeof error === "object" && "data" in error
-          ? getApiErrorMessage(error.data as any)
-          : t("auth.resetPassword.errorMessage") ||
-            "Có lỗi xảy ra. Vui lòng thử lại sau.";
+      // Log error vào console để debug (chỉ trong console)
+      // Log error vào console để debug (chỉ trong development)
+      if (import.meta.env.DEV || import.meta.env.MODE === "development") {
+        console.log('=== RESET PASSWORD API ERROR ===');
+        // Không log full error để tránh leak thông tin nhạy cảm
+        if (error && typeof error === "object" && "status" in error) {
+          console.log('Error Status:', (error as any).status);
+        }
+        console.log('==================================');
+      }
+
+      let errorMessage = t("auth.resetPassword.errorMessage") || "Có lỗi xảy ra. Vui lòng thử lại sau.";
+
+      // Handle RTK Query error format và lấy message thân thiện
+      if (error && typeof error === "object") {
+        if ("data" in error && error.data) {
+          errorMessage = getApiErrorMessage(error.data as any);
+        } else if ("error" in error && error.error) {
+          if (typeof error.error === "string") {
+            errorMessage = error.error;
+          } else if (typeof error.error === "object" && "data" in error.error) {
+            errorMessage = getApiErrorMessage(error.error.data as any);
+          }
+        } else if ("status" in error) {
+          const status = (error as any).status;
+          if (status === 500) {
+            errorMessage = t("auth.resetPassword.errorMessage") || "Lỗi hệ thống. Vui lòng thử lại sau.";
+          } else if (status === 400) {
+            errorMessage = "Thông tin không hợp lệ. Vui lòng kiểm tra lại.";
+          } else if (status === 401 || status === 403) {
+            errorMessage = "Token không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu đặt lại mật khẩu mới.";
+          } else if (status >= 500) {
+            errorMessage = t("auth.resetPassword.errorMessage") || "Lỗi hệ thống. Vui lòng thử lại sau.";
+          }
+        }
+      }
 
       toast.error(
         t("auth.resetPassword.errorTitle") || "Đặt lại mật khẩu thất bại",
@@ -167,14 +198,29 @@ export function ResetPasswordForm() {
     <motion.form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="space-y-4"
+      className="space-y-5"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
+      {/* Header - Chỉ hiển thị khi đang nhập liệu */}
+      <motion.div variants={itemVariants} className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-[var(--color-dark-blue)] mb-3 tracking-tight">
+          <AnimatedText>
+            {t("auth.resetPassword.title") || "Đặt lại mật khẩu"}
+          </AnimatedText>
+        </h1>
+        <p className="text-gray-600 text-sm leading-relaxed">
+          <AnimatedText>
+            {t("auth.resetPassword.subtitle") ||
+              "Tạo mật khẩu mới cho tài khoản của bạn"}
+          </AnimatedText>
+        </p>
+      </motion.div>
+
       {/* Description */}
       <motion.div className="mb-6" variants={itemVariants}>
-        <p className="text-sm text-gray-600 text-center leading-relaxed">
+        <p className="text-sm text-gray-600 text-center leading-relaxed px-2">
           <AnimatedText>
             {t("auth.resetPassword.description") ||
               "Nhập mật khẩu mới của bạn. Mật khẩu phải có ít nhất 6 ký tự."}
@@ -222,7 +268,7 @@ export function ResetPasswordForm() {
       </motion.div>
 
       {/* Submit Button */}
-      <motion.div variants={itemVariants} className="pt-2">
+      <motion.div variants={itemVariants} className="pt-4">
         <SubmitButton
           isLoading={isLoading}
           loadingText={t("auth.resetPassword.submitting") || "Đang xử lý..."}
@@ -231,10 +277,10 @@ export function ResetPasswordForm() {
       </motion.div>
 
       {/* Back to Sign In Link */}
-      <motion.div className="text-center pt-4" variants={itemVariants}>
+      <motion.div className="text-center pt-6" variants={itemVariants}>
         <Link
           to="/auth/sign-in"
-          className="text-sm text-[var(--color-dark-blue)] hover:underline font-medium inline-flex items-center gap-1"
+          className="animated-underline text-sm text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 font-medium inline-flex items-center gap-2 transition-colors duration-200"
         >
           <ArrowLeft className="w-4 h-4" />
           <AnimatedText>

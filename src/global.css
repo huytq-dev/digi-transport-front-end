@@ -336,3 +336,30 @@
     transform: none !important;
   }
 }
+
+/* Ẩn nút xem mật khẩu mặc định của trình duyệt (Edge/IE) */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+/* Animated Underline Link Effect */
+.animated-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s ease-in-out;
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
