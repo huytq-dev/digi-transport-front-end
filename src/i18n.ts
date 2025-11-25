@@ -19,6 +19,11 @@ i18n
     },
     fallbackLng: 'vi',
     debug: false,
+    // Return empty string instead of key if translation not found
+    returnEmptyString: false,
+    returnNull: false,
+    // Return the key itself if translation not found (better for debugging)
+    returnObjects: false,
     interpolation: {
       escapeValue: false,
     },
