@@ -20,6 +20,9 @@ interface DatePickerProps {
   className?: string
   locale?: "vi" | "en"
   label?: string
+  variant?: "default" | "light" // light for light backgrounds, default for white backgrounds
+  dateFormat?: string // Custom date format (default: "PPP" for long format, can use "dd/MM/yyyy" for short)
+  minDate?: Date // Minimum selectable date (to prevent selecting past dates)
 }
 
 export function DatePicker({
@@ -30,14 +33,23 @@ export function DatePicker({
   className,
   locale = "en",
   label,
+  variant = "default",
+  dateFormat,
+  minDate,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false)
   const dateLocale = locale === "vi" ? vi : enUS
+  const isLight = variant === "light"
+  // Default format: "PPP" for long format, but can be overridden
+  const formatString = dateFormat || "PPP"
 
   return (
     <div className={cn(label ? "space-y-1.5" : "", className)}>
       {label && (
-        <label className="text-xs font-semibold text-[var(--color-dark-blue)]/70 uppercase tracking-wider pl-1">
+        <label className={cn(
+          "text-xs font-semibold uppercase tracking-wider pl-1",
+          isLight ? "text-white/80" : "text-[var(--color-dark-blue)]/70"
+        )}>
           {label}
         </label>
       )}
@@ -47,12 +59,23 @@ export function DatePicker({
             variant="outline"
             disabled={disabled}
             className={cn(
-              "w-full h-11 justify-between font-normal bg-white/50 border-[var(--color-light-blue)]/30 hover:bg-white focus:bg-white focus:border-[var(--color-dark-blue)] rounded-xl transition-all",
-              !date && "text-muted-foreground"
+              "w-full h-11 justify-between font-normal rounded-xl transition-all min-w-0",
+              isLight
+                ? cn(
+                    "bg-white/10 border-white/20 text-white hover:bg-white/20 focus:bg-white/20 focus:border-white/30",
+                    !date && "text-white/50"
+                  )
+                : cn(
+                    "bg-white/50 border-[var(--color-light-blue)]/30 hover:bg-white focus:bg-white focus:border-[var(--color-dark-blue)]",
+                    !date && "text-muted-foreground"
+                  )
             )}
           >
-            <div className="flex items-center gap-2">
-              <CalendarIcon className="h-5 w-5 text-[var(--color-light-blue)]" />
+            <div className="flex items-center gap-2 min-w-0 flex-1">
+              <CalendarIcon className={cn(
+                "h-5 w-5 flex-shrink-0",
+                isLight ? "text-white/70" : "text-[var(--color-light-blue)]"
+              )} />
               <AnimatePresence mode="wait">
                 {date ? (
                   <motion.span
@@ -61,9 +84,9 @@ export function DatePicker({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 5 }}
                     transition={{ duration: 0.2 }}
-                    className="text-sm"
+                    className={cn("text-sm truncate min-w-0 flex-1", isLight && "text-white")}
                   >
-                    {format(date, "PPP", { locale: dateLocale })}
+                    {format(date, formatString, { locale: dateLocale })}
                   </motion.span>
                 ) : (
                   <motion.span
@@ -72,18 +95,21 @@ export function DatePicker({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="text-sm"
+                    className={cn("text-sm truncate min-w-0 flex-1", isLight && "text-white/50")}
                   >
                     {placeholder}
                   </motion.span>
                 )}
               </AnimatePresence>
             </div>
-            <ChevronDownIcon className="h-4 w-4 opacity-50" />
+            <ChevronDownIcon className={cn(
+              "h-4 w-4",
+              isLight ? "text-white/50" : "opacity-50"
+            )} />
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto p-0 border-0 shadow-2xl bg-white/95 backdrop-blur-xl rounded-2xl ring-1 ring-[var(--color-dark-blue)]/10 overflow-visible [&_.rdp-dropdown_root:has-focus]:ring-0 [&_.rdp-dropdown_root:has-focus]:shadow-none [&_.rdp-dropdown_root:has-focus]:outline-none [&_.rdp-dropdown_root:focus-within]:ring-0 [&_.rdp-dropdown_root:focus-within]:shadow-none [&_.rdp-dropdown_root:focus-within]:outline-none [&_.rdp-dropdown_root_select]:focus:outline-none [&_.rdp-dropdown_root_select]:focus:ring-0 [&_.rdp-dropdown_root_select]:focus:shadow-none [&_.rdp-dropdown_root_select]:focus-visible:outline-none [&_.rdp-dropdown_root_select]:focus-visible:ring-0 [&_.rdp-button_previous]:focus:ring-0 [&_.rdp-button_previous]:focus:outline-none [&_.rdp-button_previous]:focus-visible:ring-0 [&_.rdp-button_next]:focus:ring-0 [&_.rdp-button_next]:focus:outline-none [&_.rdp-button_next]:focus-visible:ring-0"
+          className="w-auto p-0 border-0 shadow-2xl bg-white/95 backdrop-blur-xl rounded-2xl ring-1 ring-[var(--color-dark-blue)]/10 overflow-visible z-[100] [&_.rdp-dropdown_root:has-focus]:ring-0 [&_.rdp-dropdown_root:has-focus]:shadow-none [&_.rdp-dropdown_root:has-focus]:outline-none [&_.rdp-dropdown_root:focus-within]:ring-0 [&_.rdp-dropdown_root:focus-within]:shadow-none [&_.rdp-dropdown_root:focus-within]:outline-none [&_.rdp-dropdown_root_select]:focus:outline-none [&_.rdp-dropdown_root_select]:focus:ring-0 [&_.rdp-dropdown_root_select]:focus:shadow-none [&_.rdp-dropdown_root_select]:focus-visible:outline-none [&_.rdp-dropdown_root_select]:focus-visible:ring-0 [&_.rdp-button_previous]:focus:ring-0 [&_.rdp-button_previous]:focus:outline-none [&_.rdp-button_previous]:focus-visible:ring-0 [&_.rdp-button_next]:focus:ring-0 [&_.rdp-button_next]:focus:outline-none [&_.rdp-button_next]:focus-visible:ring-0"
           align="start"
           sideOffset={8}
           side="bottom"
@@ -128,6 +154,15 @@ export function DatePicker({
             captionLayout="dropdown"
             numberOfMonths={1}
             className="bg-transparent p-5"
+            disabled={minDate ? (date) => {
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              const min = minDate instanceof Date ? minDate : new Date(minDate);
+              min.setHours(0, 0, 0, 0);
+              const checkDate = date instanceof Date ? date : new Date(date);
+              checkDate.setHours(0, 0, 0, 0);
+              return checkDate < min;
+            } : undefined}
             formatters={{
               formatMonthDropdown: (date: Date) =>
                 date.toLocaleDateString(locale === "vi" ? "vi-VN" : "en-US", { month: "long" }),

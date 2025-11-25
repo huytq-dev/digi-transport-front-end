@@ -321,6 +321,16 @@
   }
 }
 
+/* Scrollbar Hide Utility */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
 /* Touch optimization for mobile */
 @media (hover: none) and (pointer: coarse) {
   /* Increase tap target sizes */
