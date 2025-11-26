@@ -33,7 +33,7 @@ export function LanguageToggle() {
             "text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]",
             "hover:bg-[rgba(143,171,212,0.1)]",
             "border border-transparent hover:border-[rgba(143,171,212,0.3)]",
-            "rounded-md outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-dark-blue)] focus-visible:ring-offset-2"
+            "rounded-md outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
           )}
           aria-label={t('common.language')}
         >

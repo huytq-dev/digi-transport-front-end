@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface AnimatedTextProps {
   children: ReactNode;
@@ -30,7 +31,13 @@ export const AnimatedText = ({
   className = "",
   animationType = "fade",
 }: AnimatedTextProps) => {
+  const shouldReduceMotion = useReducedMotion();
   const variant = animationVariants[animationType];
+
+  // If reduced motion, skip animation
+  if (shouldReduceMotion) {
+    return <span className={className}>{children}</span>;
+  }
 
   return (
     <AnimatePresence mode="wait">

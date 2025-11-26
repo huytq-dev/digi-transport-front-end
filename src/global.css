@@ -275,3 +275,101 @@
     animation: shimmer 1.5s infinite;
   }
 }
+
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  /* Reduce backdrop-blur intensity on mobile for better performance */
+  [class*="backdrop-blur-xl"],
+  [class*="backdrop-blur-2xl"] {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  [class*="backdrop-blur-md"] {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  /* Reduce blur radius for large blur effects */
+  [class*="blur-\[100px\]"],
+  [class*="blur-\[120px\]"] {
+    filter: blur(40px) !important;
+  }
+
+  /* Optimize transforms for mobile */
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [class*="animate-"] {
+    animation: none !important;
+  }
+}
+
+/* Scrollbar Hide Utility */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Touch optimization for mobile */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase tap target sizes */
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Disable hover effects on touch devices */
+  *:hover {
+    transform: none !important;
+  }
+}
+
+/* Ẩn nút xem mật khẩu mặc định của trình duyệt (Edge/IE) */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+/* Animated Underline Link Effect */
+.animated-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s ease-in-out;
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}

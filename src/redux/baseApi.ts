@@ -1,19 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseUrl } from '@/config';
+import { authService } from '@/features/auth/auth.service';
 
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token');
+      const token = authService.getAccessToken();
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }
       return headers;
     },
   }),
-  tagTypes: [], // Add your tag types here for cache invalidation
+  tagTypes: ['Bookings', 'Trips', 'Dashboard'],
+  keepUnusedDataFor: 60,
   endpoints: () => ({}),
 });
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
@@ -260,5 +260,5 @@ function LandingTestimonials() {
   );
 }
 
-export default LandingTestimonials;
+export default memo(LandingTestimonials);
 

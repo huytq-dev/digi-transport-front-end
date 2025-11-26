@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect, useRef } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef, memo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -36,16 +36,13 @@ const NAVIGATION_ITEMS: NavigationItem[] = [
 function LandingHeader() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState<string>("");
-  // Initialize isScrolled based on current scroll position to prevent flash
-  const [isScrolled, setIsScrolled] = useState(() => {
-    if (typeof window !== "undefined") {
-      return window.scrollY > 50;
-    }
-    return false;
-  });
+  // Initialize isScrolled to false to avoid hydration mismatch
+  // Will be updated in useEffect after mount
+  const [isScrolled, setIsScrolled] = useState(false);
   const sectionsCacheRef = useRef<Map<string, Element>>(new Map());
   // Ref để chặn sự kiện scroll khi đang click menu
   const isClickingRef = useRef(false);
@@ -86,7 +83,7 @@ function LandingHeader() {
     return sections;
   }, []);
 
-  // Optimized scroll detection
+  // Optimized scroll detection with performance improvements
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > SCROLL_THRESHOLD);
 
@@ -103,7 +100,7 @@ function LandingHeader() {
     const documentHeight = document.documentElement.scrollHeight;
     const scrollPosition = latest + windowHeight;
 
-    // Check if near bottom (for contact section)
+    // Check if near bottom (for contact section) - early return for better performance
     if (scrollPosition >= documentHeight - BOTTOM_THRESHOLD) {
       const contactSection = sections.find((s) => s.href === "#contact");
       if (contactSection) {
@@ -116,33 +113,50 @@ function LandingHeader() {
     const viewportTop = VIEWPORT_TOP_OFFSET;
     const viewportBottom = windowHeight - VIEWPORT_BOTTOM_OFFSET;
 
-    const currentSection = sections.find(
-      (section) =>
-        section.top <= viewportBottom && section.bottom >= viewportTop
-    );
+    // Optimize: use for loop instead of find for better performance
+    let currentSection: { href: string; top: number; bottom: number } | undefined;
+    for (let i = 0; i < sections.length; i++) {
+      const section = sections[i];
+      if (section.top <= viewportBottom && section.bottom >= viewportTop) {
+        currentSection = section;
+        break;
+      }
+    }
 
     if (currentSection) {
       setActiveNav(currentSection.href);
       return;
     }
 
-    // Find closest section above viewport
-    const sectionsAbove = sections.filter((s) => s.top < viewportTop);
-    if (sectionsAbove.length > 0) {
-      const closest = sectionsAbove.reduce((prev, curr) =>
-        curr.top > prev.top ? curr : prev
-      );
-      setActiveNav(closest.href);
+    // Find closest section above viewport - optimized with single pass
+    let closestAbove: { href: string; top: number; bottom: number } | undefined;
+    let maxTop = -Infinity;
+    for (let i = 0; i < sections.length; i++) {
+      const section = sections[i];
+      if (section.top < viewportTop && section.top > maxTop) {
+        maxTop = section.top;
+        closestAbove = section;
+      }
+    }
+
+    if (closestAbove) {
+      setActiveNav(closestAbove.href);
       return;
     }
 
-    // Fallback: find last section below viewport
-    const sectionsBelow = sections.filter((s) => s.top < viewportBottom);
-    if (sectionsBelow.length > 0) {
-      const lastSection = sectionsBelow.reduce((prev, curr) =>
-        curr.top > prev.top ? curr : prev
-      );
-      setActiveNav(lastSection.href);
+    // Fallback: find last section below viewport - optimized with single pass
+    let lastBelow: { href: string; top: number; bottom: number } | undefined;
+    let maxTopBelow = -Infinity;
+    for (let i = 0; i < sections.length; i++) {
+      const section = sections[i];
+      if (section.top < viewportBottom && section.top > maxTopBelow) {
+        maxTopBelow = section.top;
+        lastBelow = section;
+      }
+    }
+
+    if (lastBelow) {
+      setActiveNav(lastBelow.href);
     }
   });
 
@@ -200,12 +214,17 @@ function LandingHeader() {
   }, []);
 
   // Sync scroll position on mount to prevent flash
+  // Only runs on client side after mount to avoid hydration mismatch
   useEffect(() => {
     const checkScrollPosition = () => {
+      if (typeof window !== "undefined") {
       setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
+      }
     };
 
+    // Check immediately after mount
     checkScrollPosition();
+    // Also check after a short delay to catch any initial scroll position
     const timeoutId = setTimeout(checkScrollPosition, 100);
     return () => clearTimeout(timeoutId);
   }, []);
@@ -231,6 +250,18 @@ function LandingHeader() {
     };
   }, [location.hash]);
 
+  // Listen for language changes
+  useEffect(() => {
+    const handleLanguageChanged = (lng: string) => {
+      setCurrentLanguage(lng);
+    };
+
+    i18n.on('languageChanged', handleLanguageChanged);
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [i18n]);
+
   // Clear cache and timeout on unmount
   useEffect(() => {
     return () => {
@@ -242,13 +273,30 @@ function LandingHeader() {
   }, []);
 
   // Memoize navigation items with translations
+  // Add fallback to prevent showing translation keys if translation fails
   const navigationItems = useMemo(
     () =>
-      NAVIGATION_ITEMS.map((item) => ({
+      NAVIGATION_ITEMS.map((item) => {
+        let translation = t(item.key, { defaultValue: '' });
+        
+        // If translation is empty or same as key, use fallback
+        if (!translation || translation === item.key) {
+          // Try to get a readable label from the key
+          const keyParts = item.key.split('.');
+          const lastPart = keyParts[keyParts.length - 1];
+          // Convert camelCase to readable text as last resort
+          translation = lastPart
+            .replace(/([A-Z])/g, ' $1')
+            .replace(/^./, (str) => str.toUpperCase())
+            .trim();
+        }
+        
+        return {
         ...item,
-        label: t(item.key),
-      })),
-    [t]
+          label: translation,
+        };
+      }),
+    [t, currentLanguage]
   );
 
   return (
@@ -360,8 +408,9 @@ function LandingHeader() {
           </motion.div>
 
           {/* Desktop Navigation Links */}
-          <nav
+          <div
             className="hidden md:flex md:items-center md:space-x-1"
+            role="navigation"
             aria-label="Main navigation"
           >
             {navigationItems.map((item) => {
@@ -399,7 +448,7 @@ function LandingHeader() {
                 </a>
               );
             })}
-          </nav>
+          </div>
 
           {/* Right Side Actions */}
           <div className="hidden md:flex md:items-center md:space-x-3">
@@ -415,7 +464,7 @@ function LandingHeader() {
             ) : (
               <>
                 <Button
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/auth/sign-in")}
                   variant="ghost"
                   className="text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 hover:bg-transparent"
                   aria-label={t("common.signIn")}
@@ -423,7 +472,7 @@ function LandingHeader() {
                   <AnimatedText>{t("common.signIn")}</AnimatedText>
                 </Button>
                 <Button
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate("/auth/sign-up")}
                   className="rounded-full bg-[var(--color-dark-blue)] text-white font-medium shadow-sm hover:bg-[var(--color-dark-blue)]/90 hover:shadow-md transition-all duration-200"
                   aria-label={t("common.signUp")}
                 >
@@ -547,7 +596,7 @@ function LandingHeader() {
                     <>
                       <Button
                         onClick={() => {
-                          navigate("/login");
+                          navigate("/auth/sign-in");
                           setIsMenuOpen(false);
                         }}
                         className="w-full justify-start text-[var(--color-dark-blue)] hover:text-[var(--color-dark-blue)]/80 hover:bg-transparent"
@@ -557,7 +606,7 @@ function LandingHeader() {
                       </Button>
                       <Button
                         onClick={() => {
-                          navigate("/register");
+                          navigate("/auth/sign-up");
                           setIsMenuOpen(false);
                         }}
                         className="w-full rounded-full bg-[var(--color-dark-blue)] text-white font-medium shadow-sm hover:bg-[var(--color-dark-blue)]/90 hover:shadow-md transition-all duration-200"
@@ -577,4 +626,4 @@ function LandingHeader() {
   );
 }
 
-export default LandingHeader;
+export default memo(LandingHeader);
