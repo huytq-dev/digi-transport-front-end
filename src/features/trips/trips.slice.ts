@@ -11,12 +11,14 @@ export const tripsApi = baseApi.injectEndpoints({
         params,
       }),
       providesTags: ['Trips'],
+      keepUnusedDataFor: 60, // Cache for 60 seconds
     }),
 
     // Get Trip Detail
     getTripDetail: builder.query<TripModel, string>({
       query: (tripId) => `/trips/${tripId}`,
       providesTags: (_result, _error, tripId) => [{ type: 'Trips', id: tripId }],
+      keepUnusedDataFor: 120, // Cache detail for 2 minutes
     }),
 
     // Rate Trip
@@ -38,6 +40,7 @@ export const tripsApi = baseApi.injectEndpoints({
       string
     >({
       query: (tripId) => `/trips/${tripId}/location`,
+      keepUnusedDataFor: 30, // Shorter cache for real-time data (30 seconds)
     }),
 
     // Get Trip Statistics
@@ -52,6 +55,7 @@ export const tripsApi = baseApi.injectEndpoints({
     >({
       query: () => '/trips/stats',
       providesTags: ['Trips'],
+      keepUnusedDataFor: 120, // Cache stats for 2 minutes
     }),
   }),
 });

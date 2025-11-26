@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -346,5 +346,5 @@ function LandingPricing() {
   );
 }
 
-export default LandingPricing;
+export default memo(LandingPricing);
 

@@ -11,12 +11,14 @@ export const bookingsApi = baseApi.injectEndpoints({
         params,
       }),
       providesTags: ['Bookings'],
+      keepUnusedDataFor: 60, // Cache for 60 seconds
     }),
 
     // Get Booking Detail
     getBookingDetail: builder.query<BookingModel, string>({
       query: (bookingId) => `/bookings/${bookingId}`,
       providesTags: (_result, _error, bookingId) => [{ type: 'Bookings', id: bookingId }],
+      keepUnusedDataFor: 120, // Cache detail for 2 minutes
     }),
 
     // Cancel Booking
@@ -43,6 +45,7 @@ export const bookingsApi = baseApi.injectEndpoints({
     >({
       query: () => '/bookings/stats',
       providesTags: ['Bookings'],
+      keepUnusedDataFor: 120, // Cache stats for 2 minutes
     }),
   }),
 });

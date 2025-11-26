@@ -14,7 +14,8 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Bookings', 'Trips', 'Dashboard'], // Add your tag types here for cache invalidation
+  tagTypes: ['Bookings', 'Trips', 'Dashboard'],
+  keepUnusedDataFor: 60,
   endpoints: () => ({}),
 });
 

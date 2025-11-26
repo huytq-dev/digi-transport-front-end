@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, memo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
@@ -290,4 +290,4 @@ function LandingFooter() {
   );
 }
 
-export default LandingFooter;
+export default memo(LandingFooter);
