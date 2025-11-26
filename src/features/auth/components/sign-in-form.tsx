@@ -10,6 +10,7 @@ import { signInSchema, type SignInFormData } from "../auth.schema";
 import { useSignInMutation } from "../auth.slice";
 import { isApiResponseSuccess, getApiErrorMessage } from "@/features/Common/common.type";
 import { authService } from "../auth.service";
+import { useSocialLogin } from "../hooks/use-social-login";
 import {
   containerVariants,
   itemVariants,
@@ -29,6 +30,7 @@ export function SignInForm() {
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const [signIn, { isLoading }] = useSignInMutation();
+  const { handleGoogleLogin, handleFacebookLogin, isLoading: isSocialLoading } = useSocialLogin();
 
   const {
     register,
@@ -218,7 +220,11 @@ export function SignInForm() {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <SocialLoginButtons isLoading={isLoading} />
+          <SocialLoginButtons 
+            isLoading={isLoading || isSocialLoading}
+            onGoogleClick={handleGoogleLogin}
+            onFacebookClick={handleFacebookLogin}
+          />
         </motion.div>
 
         <motion.div className="text-center" variants={itemVariants}>

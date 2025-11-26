@@ -9,7 +9,9 @@
     "signUp": "Đăng ký",
     "logout": "Đăng xuất",
     "language": "Ngôn ngữ",
-    "help": "Trợ giúp"
+    "help": "Trợ giúp",
+    "loading": "Đang xử lý...",
+    "pleaseWait": "Vui lòng đợi trong giây lát"
   },
   "header": {
     "about": "Về chúng tôi",
@@ -430,6 +432,14 @@
       "goToSignIn": "Đi đến đăng nhập",
       "backToSignIn": "Quay lại đăng nhập",
       "resendEmail": "Đăng ký lại"
+    },
+    "socialLogin": {
+      "successTitle": "Đăng nhập thành công!",
+      "successMessage": "Chào mừng bạn trở lại!",
+      "errorTitle": "Đăng nhập thất bại",
+      "errorMessage": "Có lỗi xảy ra. Vui lòng thử lại sau.",
+      "loading": "Đang xử lý...",
+      "loadingMessage": "Vui lòng đợi trong giây lát"
     }
   },
   "header": {
