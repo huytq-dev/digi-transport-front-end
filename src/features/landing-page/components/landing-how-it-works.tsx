@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Search, Car, CreditCard, MapPin, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -146,5 +147,5 @@ function LandingHowItWorks() {
   );
 }
 
-export default LandingHowItWorks;
+export default memo(LandingHowItWorks);
 

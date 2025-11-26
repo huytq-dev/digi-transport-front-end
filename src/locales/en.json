@@ -9,7 +9,9 @@
     "signUp": "Sign Up",
     "logout": "Logout",
     "language": "Language",
-    "help": "Help"
+    "help": "Help",
+    "loading": "Processing...",
+    "pleaseWait": "Please wait a moment"
   },
   "header": {
     "about": "About Us",
@@ -430,6 +432,14 @@
       "goToSignIn": "Go to sign in",
       "backToSignIn": "Back to sign in",
       "resendEmail": "Sign up again"
+    },
+    "socialLogin": {
+      "successTitle": "Sign In Successful!",
+      "successMessage": "Welcome back!",
+      "errorTitle": "Sign In Failed",
+      "errorMessage": "An error occurred. Please try again later.",
+      "loading": "Processing...",
+      "loadingMessage": "Please wait a moment"
     }
   },
   "header": {

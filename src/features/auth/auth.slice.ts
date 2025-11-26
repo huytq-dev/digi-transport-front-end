@@ -62,6 +62,8 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     // POST /api/auth/social-login
+    // Nhận AccessToken (có thể là ID token, access token, hoặc authorization code)
+    // và Provider (Google = 1, Facebook = 2)
     socialSignIn: builder.mutation<
       SocialSignInResponseModel,
       SocialSignInRequestModel

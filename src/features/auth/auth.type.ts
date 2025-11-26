@@ -75,11 +75,17 @@ export interface RefreshTokenRequestModel {
 export type RefreshTokenResponseModel = SignInResponseModel;
 
 // Social Login
+// AccessToken có thể là:
+// - ID token (cho Google Identity Services)
+// - Access token (cho Facebook)
+// - Authorization code (cho Google OAuth Authorization Code Flow)
 export interface SocialSignInRequestModel {
-  AccessToken: string;
-  Provider: SocialProvider;
+  AccessToken: string; // ID token, access token, hoặc authorization code
+  Provider: SocialProvider; // Google = 1, Facebook = 2
 }
 
+// Social Login Response - Backend trả về giống SignInResponseModel
+// (AccessToken, ExpiresIn, RefreshToken)
 export type SocialSignInResponseModel = SignInResponseModel;
 
 // Email Verification
